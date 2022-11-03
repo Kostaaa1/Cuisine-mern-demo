@@ -5,50 +5,73 @@ import styled from "styled-components"
 const Recipe = () => {
     const [recipe, setRecipe] = useState([])
     const [ingredients, setIngredients] = useState([])
+    const [instructions, setInstructions] = useState([])
     const [active, setActive] = useState(true)
     const params = useParams()
 
-    const fetchDetails = async (id) => {
-        const res = await fetch(`https://api.edamam.com/api/recipes/v2/${id}?type=public&app_id=${import.meta.env.VITE_API_ID}&app_key=${import.meta.env.VITE_API_KEY}`)
-        const data = await res.json() 
+    useEffect(() => {
+        getDetails()
+    }, [params.id])
 
-        setRecipe(data.recipe)
-        setIngredients(data.recipe.ingredients)
-        console.log(recipe)
+    const getDetails = async () => {
+        try {
+            const res = await fetch(`/api/recipe/${params.id}`)
+            const data = await res.json()
+
+            if (data.length !== 0) {
+                setRecipe(data[0].data)
+                setIngredients(data[0].data.extendedIngredients)
+                setInstructions(data[0].data.analyzedInstructions[0].steps)
+            } else {
+                fetchDetails(params.id)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    useEffect(() => {
-        fetchDetails(params.id)
-        console.log(recipe)
-    }, [params.id])
+    const fetchDetails = async (id) => {
+        const res = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=f4eb30e350ef4261a02e333108f3ad33`)
+        const infoData = await res.json() 
+
+        fetch('/api/recipe/createInfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id: params.id, info: infoData})
+        })
+        setRecipe(infoData)
+        setIngredients(infoData.extendedIngredients)
+        setInstructions(infoData.analyzedInstructions[0].steps)
+    }
+
 
     return (
         <Wrapper>
             <div className="label">
-                <h2> {recipe.label} </h2>
+                <h2> {recipe.title} </h2>
                 <img src={recipe.image} alt="" />
             </div>
             <Info>
                 <div className="btn">
                     <Button className={active ? 'active' : ''} onClick={() => setActive(true)}>Ingredients</Button>
-                    <Button className={active ? '' : 'active'} onClick={() => setActive(false)}>About</Button>
+                    <Button className={active ? '' : 'active'} onClick={() => setActive(false)}>instructions</Button>
                 </div>
                 <div>
                     {active && <ul>
                         {ingredients.map((x, id) => (
-                            <li key={id}> {x.text} </li>
+                            <li key={id}> {x.original} </li>
                         ))}
                     </ul>}
-
+                    
                     {!active && <ul>
-                        <li>Dish type: <span>{recipe.dishType}</span>  </li>
-                        <li>Cuisine type: <span>{recipe.cuisineType}</span>  </li>
-                        <li>Meal type: <span>{recipe.mealType}</span>  </li>
-                        <li>Calories: <span>{Math.round(recipe.calories, 2)} cal</span>  </li>
+                        {instructions.map(x => (
+                            <li key={x.id}> {x.step} </li>
+                        ))}
                     </ul>}
                 </div>
             </Info>
-            
         </Wrapper>
     )
 }
@@ -69,8 +92,8 @@ const Wrapper = styled.div`
     // background-size: cover;
 
     img {
-        width: 400px;
-        height: 420px;
+        width: 440px;
+        height: 400px;
         object-fit: cover;
         border-radius: 20px;
     }
@@ -89,7 +112,7 @@ const Wrapper = styled.div`
     }
 
     h2 { 
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
         width: 420px;
         overflow-wrap: break-word;
     }
@@ -98,11 +121,11 @@ const Wrapper = styled.div`
         font-size: 1.2rem;
         line-height: 2.5rem;
         list-style: square;
-        color: black;
+        color: #111;
         font-weight: 600;
     }
     ul {
-        margin-top: 3rem;
+        margin-top: 1.4rem;
     }
 
     span {
@@ -126,6 +149,7 @@ const Button = styled.button`
 `
 
 const Info = styled.div`
+    position: relative;
     margin-left: 8rem;
     display: flex;
     align-items: flex-start;

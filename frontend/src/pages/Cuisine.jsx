@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useParams, Link } from "react-router-dom"
 import styled from "styled-components"
 import { motion } from "framer-motion"
@@ -9,19 +9,18 @@ const Cuisine = () => {
     const [cuisine, setCuisine] = useState([])
     const params = useParams()
 
-    const getCuisine = async (query) => {
-        const res = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${import.meta.env.VITE_API_ID}&app_key=${import.meta.env.VITE_API_KEY}`)
-        const data = await res.json()
+    // const getCuisine = async (query) => {
+    //     const res = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${import.meta.env.VITE_API_ID}&app_key=${import.meta.env.VITE_API_KEY}`)
+    //     const data = await res.json()
 
-        setCuisine(data.hits)
-    }
-
+    //     setCuisine(data.hits)
+    // }
     useEffect(() => {
-        getCuisine(params.type)
-        // fetch('/api/getCuisine')
-        //     .then(res => res.json())
-        //     .then(data => console.log(data))
-        //     .catch(err => console.log(err))
+        fetch(`/api/cuisine/${params.type}`)
+            .then(res => res.json())
+            .then(cuisine => setCuisine(cuisine[0].data.results))
+            .catch(err => console.log(err))
+        // getCuisine(params.type)
     }, [params.type])
 
 
@@ -34,11 +33,11 @@ const Cuisine = () => {
                 exit={{ opacity: 0 }}
                 transition={{duration: 0.5}}
             >
-                {cuisine.map((x, id) => (
-                    <Card key={id}>
-                        <Link to={'/recipe/' + x.recipe.uri.slice(51)}>
-                            <img src={x.recipe.image} alt="" />
-                            <h4>{x.recipe.label}</h4>
+                {cuisine.map(x => (
+                    <Card key={x.id}>
+                        <Link to={'/recipe/' + x.id}>
+                            <img src={x.image} alt="" />
+                            <h4>{x.title}</h4>
                         </Link>
                     </Card>
                 ))}
@@ -50,17 +49,18 @@ const Cuisine = () => {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+
     h2 {
         color: white;
         margin: 40px 0;
-        width: fit-content:
+        width: max-width:
     }
 `
 
 const Grid = styled(motion.div)`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    grid-gap: 3rem;    
+    grid-gap: 3rem;
 `
 
 const Card = styled.div`
@@ -76,7 +76,6 @@ const Card = styled.div`
         padding: 1rem;
         color: white;
     }
-
 `
 
 export default Cuisine

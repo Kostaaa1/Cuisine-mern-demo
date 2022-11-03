@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const RecipeSchema = new mongoose.Schema({
-    recipes: {},
+const PopularSchema = new mongoose.Schema({
+    popular: {},
 })
 
-module.exports = mongoose.model('Recipe', RecipeSchema)
+module.exports = mongoose.model('Popular', PopularSchema)

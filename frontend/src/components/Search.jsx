@@ -16,32 +16,57 @@ const Search = () => {
 
     return (
         <Form onSubmit={submitHandler}>
-            <div>
-                <input onChange={e => setInput(e.target.value)} type="text" value={input}/>
-                <FaSearch />
+            <div className="form-cont">
+                <div className="relative-cont">
+                    <input onChange={e => setInput(e.target.value)} type="text" value={input}/>
+                    <FaSearch />
+                </div>
             </div>
         </Form>
     )
 }
 
 const Form = styled.form`
-    margin: 0 15rem;
+    // margin: 0 15rem;
 
-    div {
+    // div {
+    //     position: relative;
+    //     width: 100%;
+    // }
+
+    // input {
+    //     background: white;
+    //     // background: linear-gradient(35deg, #494949, #313131);
+    //     font-size: 1.2rem;
+    //     color: linear-gradient(35deg, #494949, #313131);
+    //     padding: 0.35rem 3rem;
+    //     border: none;
+    //     border-radius: 2rem;
+    //     outline: none;
+    //     width: 94%;
+    //     font-weight: 500;
+    // }
+
+    .form-cont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .relative-cont {
         position: relative;
-        width: 100%;
     }
 
     input {
+        display: block;
+        align-content: center;
         background: white;
-        // background: linear-gradient(35deg, #494949, #313131);
-        font-size: 1.5rem;
-        color: linear-gradient(35deg, #494949, #313131);
-        padding: 0.6rem 3rem;
+        padding: 0.35rem 3rem;
+        border-radius: 2rem;
         border: none;
-        border-radius: 1rem;
         outline: none;
-        width: 95%;
+        width: 35vw;
+        font-size: 1.3rem;
         font-weight: 500;
     }
 

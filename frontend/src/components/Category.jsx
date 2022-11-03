@@ -32,11 +32,13 @@ const List = styled.div`
     align-items: center;
     justify-content: center;
     margin-top: 1.4rem;
+    flex-wrap: wrap;
+    width: 100%;
 `
 
 const SLink = styled(NavLink)`
     text-decoration: none;
-    margin-right: 25px;
+    margin-right: 15px;
     border-radius: 50%;
     width: 6.6rem;
     height: 6.6rem;
@@ -51,7 +53,7 @@ const SLink = styled(NavLink)`
     z-index: 1;
     transition: color 300ms ease-in-out;
     overflow: hidden;
-    color: #494949;
+    color: #333333;
    
     &::before{
         content: '';
@@ -101,7 +103,7 @@ const SLink = styled(NavLink)`
 
 const SLinkR = styled(NavLink)`
     text-decoration: none;
-    margin-right: 25px;
+    margin-right: 15px;
     border-radius: 50%;
     width: 6.6rem;
     height: 6.6rem;

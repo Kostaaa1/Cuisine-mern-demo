@@ -10,14 +10,15 @@ const Veggie = () => {
     const [veggie, setVeggie] = useState([])
 
     useEffect(() => {
-        // getVeggie()
         fetch('/api/getVeggie')
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                setVeggie(Array.from({length: 14}, (x, y) => data.veggie.hits[Math.floor(Math.random() * data.veggie.hits.length)]))
+                let arr = Array.from({length: 20}, (x, y) => data.veggie.recipes[Math.floor(Math.random() * data.veggie.recipes.length)])
+                setVeggie(arr.filter((x, i) => arr.indexOf(x) == i))
             })
             .catch(err => console.log(err))
+
+            // getVeggie()
     }, [])
 
     // const getVeggie = async () => {
@@ -53,10 +54,10 @@ const Veggie = () => {
             }}>
                 {veggie.map((hit, id) => (
                     <SplideSlide key={id}>
-                        <Link to={'/recipe/' + hit.recipe.uri.slice(51)}>
+                        <Link to={'/recipe/' + hit.id}>
                             <Card>
-                                <p> {hit.recipe.label} </p>
-                                <img src={hit.recipe.image} alt="" />
+                                <p> {hit.title} </p>
+                                <img src={hit.image} alt="" />
                                 <Gradient />
                             </Card>
                         </Link>

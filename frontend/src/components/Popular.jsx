@@ -11,8 +11,8 @@ const Popular = () => {
         fetch('/api/getPopular')
 			.then(res => res.json())
 			.then(data => {
-                console.log(data)
-                setPopular(Array.from({length: 14}, (x, y) => data.recipes.hits[Math.floor(Math.random() * data.recipes.hits.length)]))
+                let arr = Array(20).fill().map(x => data.popular.recipes[Math.floor(Math.random() * data.popular.recipes.length)])
+                setPopular(arr.filter((x, i) => arr.indexOf(x) == i))
             })
 			.catch(err => console.log(err))
     }, [])
@@ -23,7 +23,6 @@ const Popular = () => {
 
     //     setPopular(data.hits)
     // }
-
     return (
         <div>
             <Wrapper>
@@ -48,9 +47,9 @@ const Popular = () => {
                 {popular.map((x, id) => (
                     <SplideSlide key={id}>
                         <Card>
-                            <Link to={'/recipe/' + x.recipe.uri.slice(51)}>
-                                <p>{x.recipe.label}</p>
-                                <img src={x.recipe.image} alt="" />
+                            <Link to={'/recipe/' + x.id}>
+                                <p>{x.title}</p>
+                                <img src={x.image} alt="" />
                                 <Gradient />
                             </Link>
                        </Card>
