@@ -17,17 +17,8 @@ const Veggie = () => {
                 setVeggie(arr.filter((x, i) => arr.indexOf(x) == i))
             })
             .catch(err => console.log(err))
-
-            // getVeggie()
     }, [])
 
-    // const getVeggie = async () => {
-    //     const res = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=popular&app_id=${import.meta.env.VITE_API_ID}&app_key=${import.meta.env.VITE_API_KEY}&random=true`)
-    //     const data = await res.json()
-        
-    //     setVeggie(data.hits)
-    // }
-    
     return (
         <Wrapper>
             <h3>Our Vegan Picks:</h3>

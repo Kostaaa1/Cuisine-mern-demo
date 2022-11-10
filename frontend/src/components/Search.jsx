@@ -27,26 +27,6 @@ const Search = () => {
 }
 
 const Form = styled.form`
-    // margin: 0 15rem;
-
-    // div {
-    //     position: relative;
-    //     width: 100%;
-    // }
-
-    // input {
-    //     background: white;
-    //     // background: linear-gradient(35deg, #494949, #313131);
-    //     font-size: 1.2rem;
-    //     color: linear-gradient(35deg, #494949, #313131);
-    //     padding: 0.35rem 3rem;
-    //     border: none;
-    //     border-radius: 2rem;
-    //     outline: none;
-    //     width: 94%;
-    //     font-weight: 500;
-    // }
-
     .form-cont {
         display: flex;
         align-items: center;

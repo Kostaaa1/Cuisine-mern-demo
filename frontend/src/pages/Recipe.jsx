@@ -1,101 +1,115 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import styled from "styled-components"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
 const Recipe = () => {
-    const [recipe, setRecipe] = useState([])
-    const [ingredients, setIngredients] = useState([])
-    const [instructions, setInstructions] = useState([])
-    const [active, setActive] = useState(true)
-    const params = useParams()
+    const [recipe, setRecipe] = useState([]);
+    const [ingredients, setIngredients] = useState([]);
+    const [instructions, setInstructions] = useState([]);
+    const [active, setActive] = useState(true);
+    const params = useParams();
 
     useEffect(() => {
-        getDetails()
-    }, [params.id])
+        getDetails();
+    }, [params.id]);
 
     const getDetails = async () => {
         try {
-            const res = await fetch(`/api/recipe/${params.id}`)
-            const data = await res.json()
+            const res = await fetch(`/api/recipe/${params.id}`);
+            const data = await res.json();
 
             if (data.length !== 0) {
-                setRecipe(data[0].data)
-                setIngredients(data[0].data.extendedIngredients)
-                setInstructions(data[0].data.analyzedInstructions[0].steps)
+                setRecipe(data[0].data);
+                setIngredients(data[0].data.extendedIngredients);
+                setInstructions(data[0].data.analyzedInstructions[0].steps);
             } else {
-                fetchDetails(params.id)
+                fetchDetails(params.id);
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     const fetchDetails = async (id) => {
-        const res = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=f4eb30e350ef4261a02e333108f3ad33`)
-        const infoData = await res.json() 
+        const res = await fetch(
+            `https://api.spoonacular.com/recipes/${id}/information?apiKey=f4eb30e350ef4261a02e333108f3ad33`
+        );
+        const infoData = await res.json();
 
-        fetch('/api/recipe/createInfo', {
-            method: 'POST',
+        fetch("/api/recipe/createInfo", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({id: params.id, info: infoData})
-        })
-        setRecipe(infoData)
-        setIngredients(infoData.extendedIngredients)
-        setInstructions(infoData.analyzedInstructions[0].steps)
-    }
-
+            body: JSON.stringify({ id: params.id, info: infoData }),
+        });
+        setRecipe(infoData);
+        setIngredients(infoData.extendedIngredients);
+        setInstructions(infoData.analyzedInstructions[0].steps);
+    };
 
     return (
         <Wrapper>
             <div className="label">
-                <h2> {recipe.title} </h2>
+                <h2> {recipe.title}: </h2>
                 <img src={recipe.image} alt="" />
             </div>
             <Info>
                 <div className="btn">
-                    <Button className={active ? 'active' : ''} onClick={() => setActive(true)}>Ingredients</Button>
-                    <Button className={active ? '' : 'active'} onClick={() => setActive(false)}>instructions</Button>
+                    <Button
+                        className={active ? "active" : ""}
+                        onClick={() => setActive(true)}
+                    >
+                        Ingredients
+                    </Button>
+                    <Button
+                        className={active ? "" : "active"}
+                        onClick={() => setActive(false)}
+                    >
+                        Instructions
+                    </Button>
                 </div>
-                <div>
-                    {active && <ul>
-                        {ingredients.map((x, id) => (
-                            <li key={id}> {x.original} </li>
-                        ))}
-                    </ul>}
-                    
-                    {!active && <ul>
-                        {instructions.map(x => (
-                            <li key={x.id}> {x.step} </li>
-                        ))}
-                    </ul>}
+                <div className="info">
+                    {active && (
+                        <ul>
+                            {ingredients.map((x, id) => (
+                                <li key={id}> {x.original} </li>
+                            ))}
+                        </ul>
+                    )}
+
+                    {!active && (
+                        <ul>
+                            {instructions.map((x) => (
+                                <li key={x.id}> {x.step} </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </Info>
         </Wrapper>
-    )
-}
-
+    );
+};
 
 const Wrapper = styled.div`
     margin-top: 5.7rem;
     margin-bottom: 5rem;
-    min-height: 600px;
+    height: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     padding: 2rem;
     position: relative;
-    background: url('https://thumbs.dreamstime.com/z/pasta-salad-plate-ingredients-white-background-118858457.jpg') no-repeat center center;
+    background: url("https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?cs=srgb&dl=pexels-henry-%26-co-1939485.jpg&fm=jpg&_gl=1*l7q86q*_ga*NzExOTIwNTg2LjE2NjYxMDk2MTA.*_ga_8JE65Q40S6*MTY2NzQ4MDY2NC41LjEuMTY2NzQ4MDY5Ny4wLjAuMA..")
+        no-repeat center center fixed;
     border-radius: 20px;
-    // background-repeat: no-repeat;
-    // background-size: cover;
 
     img {
         width: 440px;
-        height: 400px;
+        height: 440px;
         object-fit: cover;
         border-radius: 20px;
+        outline: 2px solid black;
     }
 
     .active {
@@ -105,13 +119,16 @@ const Wrapper = styled.div`
 
     .btn {
         display: flex;
+        margin: auto;
+        margin-bottom: 20px;
     }
 
     .label {
         padding: 1rem;
     }
 
-    h2 { 
+    h2 {
+        margin-top: 1rem;
         margin-bottom: 3rem;
         width: 420px;
         overflow-wrap: break-word;
@@ -131,26 +148,26 @@ const Wrapper = styled.div`
     span {
         margin-left: 5px;
     }
-`
+`;
 
 const Button = styled.button`
     padding: 1rem 2rem;
     color: #313131;
     font-weight: 600;
     background: white;
+    max-height: 100%;
     margin-right: 2rem;
     cursor: pointer;
     transition: all 0.3s 0s ease;
 
-
     &:hover {
-        transform: scale(1.1)
+        transform: scale(1.1);
     }
-`
+`;
 
 const Info = styled.div`
     position: relative;
-    margin-left: 8rem;
+    margin-left: 6rem;
     display: flex;
     align-items: flex-start;
     padding: 1rem;
@@ -158,6 +175,18 @@ const Info = styled.div`
     justify-content: flex-start;
     flex-direction: column;
     width: 500px;
-`
 
-export default Recipe 
+    .info {
+        padding: 0px 2rem;
+        max-height: 500px;
+        overflow: scroll;
+        width: 100%;
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+        }
+    }
+`;
+
+export default Recipe;

@@ -4,7 +4,6 @@ import Cuisine from "./Cuisine"
 import Recipe from "./Recipe"
 import Searched from "./Searched"
 import { AnimatePresence } from "framer-motion"
-import { useState, useEffect } from "react"
 
 const Pages = () => {
     const location = useLocation()
@@ -22,6 +21,5 @@ const Pages = () => {
         </div>
     )
 }
-
 
 export default Pages

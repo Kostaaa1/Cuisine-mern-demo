@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import styled from 'styled-components'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
 import { Link } from "react-router-dom";
+import styled from 'styled-components'
+import '@splidejs/react-splide/css';
+
 
 const Popular = () => {
     const [popular, setPopular] = useState([])
@@ -16,13 +17,7 @@ const Popular = () => {
             })
 			.catch(err => console.log(err))
     }, [])
-    
-    // const getPopular = async () => {
-    //     const res = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=popular&app_id=${import.meta.env.VITE_API_ID}&app_key=${import.meta.env.VITE_API_KEY}&random=true`)
-    //     const data = await res.json()
 
-    //     setPopular(data.hits)
-    // }
     return (
         <div>
             <Wrapper>

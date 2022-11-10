@@ -9,18 +9,12 @@ const Cuisine = () => {
     const [cuisine, setCuisine] = useState([])
     const params = useParams()
 
-    // const getCuisine = async (query) => {
-    //     const res = await fetch(`https://api.edamam.com/search?q=${query}&app_id=${import.meta.env.VITE_API_ID}&app_key=${import.meta.env.VITE_API_KEY}`)
-    //     const data = await res.json()
 
-    //     setCuisine(data.hits)
-    // }
     useEffect(() => {
         fetch(`/api/cuisine/${params.type}`)
             .then(res => res.json())
             .then(cuisine => setCuisine(cuisine[0].data.results))
             .catch(err => console.log(err))
-        // getCuisine(params.type)
     }, [params.type])
 
 

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const InfoSchema = new mongoose.Schema({
-    id: {type: Number, unique: true, reqiored: true},
-    data: {}
-})
+    id: { type: Number, unique: true, reqiored: true },
+    data: {},
+});
 
-module.exports = mongoose.model('Info', InfoSchema)
+module.exports = mongoose.model("Info", InfoSchema);
