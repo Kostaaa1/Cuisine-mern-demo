@@ -22,7 +22,6 @@ module.exports = {
     },
     getCuisine: async (req, res) => {
         try {
-            console.log(req.params);
             const cuisine = await Cuisine.find({ name: req.params.type });
             res.json(cuisine);
         } catch (error) {

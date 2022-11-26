@@ -2,9 +2,18 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import {
+    Star,
+    StarHalf,
+    StarRate,
+    FavoriteBorder,
+    Favorite,
+} from "@material-ui/icons";
+import CardDescription from "../components/CardDescription";
 
 const Searched = () => {
     const [searchedRecipes, setSearchedRecipes] = useState([]);
+    const [favorite, setFavorite] = useState(false);
     let params = useParams();
 
     useEffect(() => {
@@ -15,7 +24,6 @@ const Searched = () => {
         try {
             const res = await fetch(`/api/searched/${params.search}`);
             const recipe = await res.json();
-            console.log(recipe);
 
             if (recipe.length !== 0) {
                 setSearchedRecipes(recipe[0].data.results);
@@ -34,7 +42,6 @@ const Searched = () => {
             }&number=10&query=${query}`
         );
         const data = await res.json();
-        console.log(data);
 
         setSearchedRecipes(data.results);
 
@@ -51,21 +58,16 @@ const Searched = () => {
 
     return (
         <Container>
-            <h2>Our recipes:</h2>
-            {/* {check && <h3>No recipes of {params.search}...</h3>} */}
+            <h2>Our {params.search} recipes:</h2>
+            {searchedRecipes.length === 0 && <h3>Loading...</h3>}
             <Grid
                 animate={{ opacity: 1 }}
                 initial={{ opacity: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                {searchedRecipes.map((x) => (
-                    <Card key={x.id}>
-                        <Link to={"/recipe/" + x.id}>
-                            <img src={x.image} alt="" />
-                            <h4>{x.title}</h4>
-                        </Link>
-                    </Card>
+                {searchedRecipes.map((data) => (
+                    <CardDescription key={data.id} data={data} />
                 ))}
             </Grid>
         </Container>
@@ -75,35 +77,94 @@ const Searched = () => {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+
     h2 {
         color: white;
         margin: 40px 0;
-    }
-    h3 {
-        color: white;
-        font-weight: 400;
     }
 `;
 
 const Grid = styled(motion.div)`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    grid-gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-gap: 2rem;
 `;
 
 const Card = styled.div`
+    background-color: white;
+    border-radius: 8px;
+    height: 100%;
+    position: relative;
+
     img {
         width: 100%;
-        border-radius: 2rem;
-        display: block;
+        height: 60%;
+        border-top-right-radius: 8px;
+        border-top-left-radius: 8px;
     }
+
     a {
         text-decoration: none;
     }
-    h4 {
-        text-align: center;
+
+    .favorite {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        background-color: #ce4620;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5px;
+        cursor: pointer;
+        transform: scale(0.9);
+
+        svg {
+            color: white;
+        }
+    }
+
+    .card__desc {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         padding: 1rem;
-        color: white;
+
+        h4 {
+            text-align: start;
+            color: #1f1f1f;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            font-size: 1.3rem;
+        }
+
+        .star__rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+                color: black;
+                font-size: 14px;
+                margin-left: 10px;
+            }
+            svg {
+                font-size: 1.2rem;
+                color: #ce4620;
+            }
+        }
+    }
+
+    &:hover {
+        h4 {
+            text-decoration: underline;
+            text-decoration-color: #f27121;
+            text-underline-offset: 5px;
+            text-decoration-thickness: 8%;
+        }
     }
 `;
 

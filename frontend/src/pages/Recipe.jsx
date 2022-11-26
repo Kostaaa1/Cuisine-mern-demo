@@ -92,21 +92,22 @@ const Recipe = () => {
 };
 
 const Wrapper = styled.div`
+    position: relative;
     margin-top: 5.7rem;
     margin-bottom: 5rem;
-    height: 100%;
+    height: 620px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 2rem;
-    position: relative;
+    padding: 1.5rem;
     background: url("https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?cs=srgb&dl=pexels-henry-%26-co-1939485.jpg&fm=jpg&_gl=1*l7q86q*_ga*NzExOTIwNTg2LjE2NjYxMDk2MTA.*_ga_8JE65Q40S6*MTY2NzQ4MDY2NC41LjEuMTY2NzQ4MDY5Ny4wLjAuMA..")
         no-repeat center center fixed;
     border-radius: 20px;
+    overflow: hidden;
 
     img {
         width: 440px;
-        height: 440px;
+        height: 380px;
         object-fit: cover;
         border-radius: 20px;
         outline: 2px solid black;
@@ -119,8 +120,7 @@ const Wrapper = styled.div`
 
     .btn {
         display: flex;
-        margin: auto;
-        margin-bottom: 20px;
+        margin-bottom: 55px;
     }
 
     .label {
@@ -131,18 +131,8 @@ const Wrapper = styled.div`
         margin-top: 1rem;
         margin-bottom: 3rem;
         width: 420px;
+        text-decoration: underline;
         overflow-wrap: break-word;
-    }
-
-    li {
-        font-size: 1.2rem;
-        line-height: 2.5rem;
-        list-style: square;
-        color: #111;
-        font-weight: 600;
-    }
-    ul {
-        margin-top: 1.4rem;
     }
 
     span {
@@ -175,9 +165,10 @@ const Info = styled.div`
     justify-content: flex-start;
     flex-direction: column;
     width: 500px;
+    max-height: 550px;
 
     .info {
-        padding: 0px 2rem;
+        padding: 0 2rem;
         max-height: 500px;
         overflow: scroll;
         width: 100%;
@@ -185,6 +176,14 @@ const Info = styled.div`
         ::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.6);
             border-radius: 20px;
+        }
+
+        li {
+            font-size: 1.2rem;
+            line-height: 2.5rem;
+            list-style: square;
+            color: #111;
+            font-weight: 600;
         }
     }
 `;

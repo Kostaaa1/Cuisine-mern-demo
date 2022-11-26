@@ -1,40 +1,40 @@
-import { NavLink } from "react-router-dom"
-import styled from "styled-components"
-import {FaPizzaSlice, FaHamburger} from 'react-icons/fa'
-import {GiChopsticks, GiNoodles} from 'react-icons/gi'
-
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+import { FaPizzaSlice, FaHamburger } from "react-icons/fa";
+import { GiChopsticks, GiNoodles } from "react-icons/gi";
 
 const Category = () => {
     return (
-        <List>
-            <SLink to={'/cuisine/italian'}>
-                <FaPizzaSlice />
-                <h4>Italian</h4>
-            </SLink>
-            <SLinkR to={'/cuisine/american'}>
-                <FaHamburger />
-                <h4>American</h4>
-            </SLinkR>
-            <SLink to={'/cuisine/thai'}>
-                <GiNoodles />
-                <h4>Thai</h4>
-            </SLink>
-            <SLinkR to={'/cuisine/japanese'}>
-                <GiChopsticks />
-                <h4>Japanese</h4>
-            </SLinkR>
-        </List>
-    )
-}
+        <>
+            <List>
+                <SLink to={"/cuisine/italian"}>
+                    <FaPizzaSlice />
+                    <h4>Italian</h4>
+                </SLink>
+                <SLinkR to={"/cuisine/american"}>
+                    <FaHamburger />
+                    <h4>American</h4>
+                </SLinkR>
+                <SLink to={"/cuisine/thai"}>
+                    <GiNoodles />
+                    <h4>Thai</h4>
+                </SLink>
+                <SLinkR to={"/cuisine/japanese"}>
+                    <GiChopsticks />
+                    <h4>Japanese</h4>
+                </SLinkR>
+            </List>
+        </>
+    );
+};
 
 const List = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1.4rem;
     flex-wrap: wrap;
     width: 100%;
-`
+`;
 
 const SLink = styled(NavLink)`
     text-decoration: none;
@@ -48,15 +48,15 @@ const SLink = styled(NavLink)`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    transform: scale(0.65);
+    transform: scale(0.62);
     cursor: pointer;
     z-index: 1;
-    transition: color 300ms ease-in-out;
+    transition: color 250ms ease-in-out;
     overflow: hidden;
     color: #333333;
-   
-    &::before{
-        content: '';
+
+    &::before {
+        content: "";
         position: absolute;
         top: 0;
         bottom: 0;
@@ -66,7 +66,7 @@ const SLink = styled(NavLink)`
         height: 100%;
         background: linear-gradient(to right, #f27121, #e94057);
         z-index: -1;
-        transition: transform 300ms ease-in-out;
+        transition: transform 250ms ease-in-out;
         transform: scaleX(0);
         transform-origin: left;
     }
@@ -79,7 +79,7 @@ const SLink = styled(NavLink)`
     h4 {
         // color: #494949;
         font-weight: bold;
-        font-size: 1rem
+        font-size: 1.2rem;
     }
 
     svg {
@@ -98,8 +98,7 @@ const SLink = styled(NavLink)`
     &:not(.active):focus {
         color: white;
     }
-`
-
+`;
 
 const SLinkR = styled(NavLink)`
     text-decoration: none;
@@ -113,10 +112,10 @@ const SLinkR = styled(NavLink)`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    transform: scale(0.65);
+    transform: scale(0.62);
     cursor: pointer;
     z-index: 1;
-    transition: color 300ms ease-in-out;
+    transition: color 250ms ease-in-out;
     overflow: hidden;
     color: #494949;
 
@@ -125,8 +124,8 @@ const SLinkR = styled(NavLink)`
         color: white;
     }
 
-    &::before{
-        content: '';
+    &::before {
+        content: "";
         position: absolute;
         top: 0;
         bottom: 0;
@@ -136,7 +135,7 @@ const SLinkR = styled(NavLink)`
         height: 100%;
         background: linear-gradient(to right, #f27121, #e94057);
         z-index: -1;
-        transition: transform 300ms ease-in-out;
+        transition: transform 250ms ease-in-out;
         transform: scaleX(0);
         transform-origin: right;
     }
@@ -148,7 +147,7 @@ const SLinkR = styled(NavLink)`
 
     h4 {
         font-weight: bold;
-        font-size: 1rem
+        font-size: 1.2rem;
     }
 
     svg {
@@ -161,8 +160,6 @@ const SLinkR = styled(NavLink)`
         background: linear-gradient(to right, #f27121, #e94057);
         pointer-events: none;
     }
-`
+`;
 
-
-
-export default Category
+export default Category;
