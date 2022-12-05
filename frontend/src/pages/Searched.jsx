@@ -3,66 +3,63 @@ import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import CardDescription from "../components/CardDescription";
+import { useQuery } from "@tanstack/react-query";
 
 const Searched = () => {
-    const [searchedRecipes, setSearchedRecipes] = useState([]);
     const [favorite, setFavorite] = useState(false);
     let params = useParams();
 
-    useEffect(() => {
-        searchedDb();
-    }, [params.search]);
-
-    const searchedDb = async () => {
-        try {
+    const { isLoading, data, isSuccess } = useQuery(
+        ["searched", params.search],
+        async () => {
             const res = await fetch(`/api/searched/${params.search}`);
-            const recipe = await res.json();
+            const data = await res.json();
 
-            if (recipe.length !== 0) {
-                setSearchedRecipes(recipe[0].data.results);
-            } else {
-                getSearched(params.search);
+            if (data.length === 0) {
+                const res = await fetch(
+                    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${
+                        import.meta.env.VITE_API_KEY
+                    }&number=30&query=${params.search}`
+                );
+                const data = await res.json();
+
+                if (data.results.length === 0) return;
+
+                fetch("/api/searched/createSearched", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ name: params.search, data: data }),
+                });
+
+                // const recipe = data.results;
+                // return recipe;
             }
-        } catch (error) {
-            console.log(error);
+
+            const recipe = data[0].data.results ?? [];
+            return recipe;
         }
-    };
+    );
 
-    const getSearched = async (query) => {
-        const res = await fetch(
-            `https://api.spoonacular.com/recipes/complexSearch?apiKey=${
-                import.meta.env.VITE_API_KEY
-            }&number=10&query=${query}`
-        );
-        const data = await res.json();
-
-        setSearchedRecipes(data.results);
-
-        if (data.results.length === 0) return;
-
-        fetch("/api/searched/createSearched", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name: params.search, data: data }),
-        });
-    };
+    console.log(data);
 
     return (
         <Container>
             <h2>Our {params.search} recipes:</h2>
-            {searchedRecipes.length === 0 && <h3>Loading...</h3>}
-            <Grid
-                animate={{ opacity: 1 }}
-                initial={{ opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                {searchedRecipes.map((searched) => (
-                    <CardDescription key={searched.id} data={searched} />
-                ))}
-            </Grid>
+            {isSuccess && (
+                <Grid
+                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {data.map((searched) => (
+                        <CardDescription key={searched.id} data={searched} />
+                    ))}
+                </Grid>
+            )}
+            {isLoading && <h2 style={{ color: "white" }}>Loading...</h2>}
         </Container>
     );
 };
