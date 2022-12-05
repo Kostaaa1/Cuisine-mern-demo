@@ -2,28 +2,13 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { fetchVeggie } from "../fetchers/recipe";
 import "@splidejs/react-splide/css";
 
 const Veggie = () => {
-    const [veggie, setVeggie] = useState([]);
-
-    useEffect(() => {
-        fetch("/api/getVeggie")
-            .then((res) => res.json())
-            .then((data) => {
-                let arr = Array.from(
-                    { length: 20 },
-                    (x, y) =>
-                        data.veggie.recipes[
-                            Math.floor(
-                                Math.random() * data.veggie.recipes.length
-                            )
-                        ]
-                );
-                setVeggie(arr.filter((x, i) => arr.indexOf(x) == i));
-            })
-            .catch((err) => console.log(err));
-    }, []);
+    const { isLoading, error, data } = useQuery(["veggie"], fetchVeggie);
+    if (isLoading) return <h1 style={{ color: "white" }}>Loading...</h1>;
 
     return (
         <Wrapper>
@@ -48,7 +33,7 @@ const Veggie = () => {
                     },
                 }}
             >
-                {veggie.map((hit, id) => (
+                {data.map((hit, id) => (
                     <SplideSlide key={id}>
                         <Link to={"/recipe/" + hit.id}>
                             <Card>

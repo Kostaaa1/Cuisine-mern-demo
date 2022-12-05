@@ -1,29 +1,15 @@
-import { useEffect, useState } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "@splidejs/react-splide/css";
+import { fetchPopular } from "../fetchers/recipe";
+import { useQuery } from "@tanstack/react-query";
 
 const Popular = () => {
-    const [popular, setPopular] = useState([]);
-    useEffect(() => {
-        fetch("/api/getPopular")
-            .then((res) => res.json())
-            .then((data) => {
-                let arr = Array(20)
-                    .fill()
-                    .map(
-                        (x) =>
-                            data.popular.recipes[
-                                Math.floor(
-                                    Math.random() * data.popular.recipes.length
-                                )
-                            ]
-                    );
-                setPopular(arr.filter((x, i) => arr.indexOf(x) == i));
-            })
-            .catch((err) => console.log(err));
-    }, []);
+    const { isLoading, error, data } = useQuery(["popular"], fetchPopular);
+    console.log(isLoading);
+
+    if (isLoading) return <h1 style={{ color: "white" }}>Loading...</h1>;
 
     return (
         <div>
@@ -46,7 +32,7 @@ const Popular = () => {
                         },
                     }}
                 >
-                    {popular.map((x, id) => (
+                    {data.map((x, id) => (
                         <SplideSlide key={id}>
                             <Card>
                                 <Link to={"/recipe/" + x.id}>

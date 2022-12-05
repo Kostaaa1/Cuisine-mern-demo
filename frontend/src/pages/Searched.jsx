@@ -2,13 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import {
-    Star,
-    StarHalf,
-    StarRate,
-    FavoriteBorder,
-    Favorite,
-} from "@material-ui/icons";
 import CardDescription from "../components/CardDescription";
 
 const Searched = () => {
@@ -66,8 +59,8 @@ const Searched = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                {searchedRecipes.map((data) => (
-                    <CardDescription key={data.id} data={data} />
+                {searchedRecipes.map((searched) => (
+                    <CardDescription key={searched.id} data={searched} />
                 ))}
             </Grid>
         </Container>

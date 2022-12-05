@@ -54,7 +54,7 @@ const Container = styled.div`
     width: 100%;
     background-color: #fffdfb;
     margin-top: 20px;
-    padding: 60px;
+    padding: 60px 100px;
     display: flex;
 
     .components {
@@ -70,7 +70,6 @@ const Container = styled.div`
         display: flex;
         justify-content: flex-start;
         margin-bottom: 20px;
-        width: 80%;
 
         img {
             margin: 12px;
