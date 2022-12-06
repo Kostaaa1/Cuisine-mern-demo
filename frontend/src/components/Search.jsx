@@ -68,7 +68,7 @@ const SearchForm = styled.form`
         .search {
             height: 80%;
             width: 40px;
-            padding: 14px;
+            padding: 12px;
             color: white;
             cursor: pointer;
             background-color: #ce4620;

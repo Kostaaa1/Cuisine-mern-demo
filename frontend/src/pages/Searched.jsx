@@ -9,57 +9,54 @@ const Searched = () => {
     const [favorite, setFavorite] = useState(false);
     let params = useParams();
 
+    const fetchSearched = async () => {
+        const res = await fetch(`/api/searched/${params.search}`);
+        const data = await res.json();
+
+        if (data.length === 0) {
+            const res = await fetch(
+                `https://api.spoonacular.com/recipes/complexSearch?apiKey=${
+                    import.meta.env.VITE_API_KEY
+                }&number=30&query=${params.search}`
+            );
+            const data = await res.json();
+            console.log(data.results);
+
+            if (data.results.length === 0) return [];
+
+            fetch("/api/searched/createSearched", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name: params.search, data: data }),
+            });
+        }
+
+        return data[0].data.results ?? [];
+    };
+
     const { isLoading, data, isSuccess } = useQuery(
         ["searched", params.search],
-        async () => {
-            const res = await fetch(`/api/searched/${params.search}`);
-            const data = await res.json();
-
-            if (data.length === 0) {
-                const res = await fetch(
-                    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${
-                        import.meta.env.VITE_API_KEY
-                    }&number=30&query=${params.search}`
-                );
-                const data = await res.json();
-
-                if (data.results.length === 0) return;
-
-                fetch("/api/searched/createSearched", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ name: params.search, data: data }),
-                });
-
-                // const recipe = data.results;
-                // return recipe;
-            }
-
-            const recipe = data[0].data.results ?? [];
-            return recipe;
-        }
+        fetchSearched
     );
-
-    console.log(data);
 
     return (
         <Container>
             <h2>Our {params.search} recipes:</h2>
-            {isSuccess && (
-                <Grid
-                    animate={{ opacity: 1 }}
-                    initial={{ opacity: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    {data.map((searched) => (
+            <Grid
+                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                {isSuccess &&
+                    data.map((searched) => (
                         <CardDescription key={searched.id} data={searched} />
                     ))}
-                </Grid>
-            )}
-            {isLoading && <h2 style={{ color: "white" }}>Loading...</h2>}
+
+                {isLoading && <h2 style={{ color: "white" }}>Loading...</h2>}
+            </Grid>
         </Container>
     );
 };
