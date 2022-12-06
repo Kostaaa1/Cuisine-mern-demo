@@ -9,5 +9,7 @@ router.get("/searched/:query", recipesController.getSearched);
 router.post("/searched/:query", recipesController.createSearched);
 router.get("/recipe/:id", recipesController.getInfo);
 router.post("/recipe/:id", recipesController.createInfo);
+router.get("/favorites", recipesController.getFavorite);
+router.post("/favorites", recipesController.createFavorite);
 
 module.exports = router;

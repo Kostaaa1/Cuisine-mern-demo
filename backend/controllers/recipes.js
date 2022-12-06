@@ -1,7 +1,9 @@
 const Popular = require("../models/Recipe");
 const Cuisine = require("../models/Cuisine");
+const SearchedRecipes = require("../models/SearchedRecipes");
 const Veggie = require("../models/Veggie");
 const Info = require("../models/Info");
+const FavoritesRecipe = require("../models/FavoritesRecipe");
 
 module.exports = {
     getPopular: async (req, res) => {
@@ -30,7 +32,9 @@ module.exports = {
     },
     getSearched: async (req, res) => {
         try {
-            const cuisine = await Cuisine.find({ name: req.params.query });
+            const cuisine = await SearchedRecipes.find({
+                name: req.params.query,
+            });
             res.json(cuisine);
         } catch (error) {
             console.log(error);
@@ -38,7 +42,7 @@ module.exports = {
     },
     createSearched: async (req, res) => {
         try {
-            const searched = await Cuisine.create({
+            const searched = await SearchedRecipes.create({
                 name: req.body.name,
                 data: req.body.data,
             });
@@ -62,6 +66,25 @@ module.exports = {
                 data: req.body.info,
             });
             res.json(infoCreate);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getFavorite: async (req, res) => {
+        try {
+            const favorite = await FavoritesRecipe.find();
+            res.json(favorite);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    createFavorite: async (req, res) => {
+        try {
+            const favoriteCreate = await FavoritesRecipe.create({
+                name: req.body.name,
+                data: req.body.recipe,
+            });
+            res.json(favoriteCreate);
         } catch (error) {
             console.log(error);
         }

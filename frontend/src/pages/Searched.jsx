@@ -20,7 +20,7 @@ const Searched = () => {
                 }&number=30&query=${params.search}`
             );
             const data = await res.json();
-            console.log(data.results);
+            console.log(data);
 
             if (data.results.length === 0) return [];
 
@@ -29,10 +29,12 @@ const Searched = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name: params.search, data: data }),
+                body: JSON.stringify({
+                    name: params.search,
+                    data: data,
+                }),
             });
         }
-
         return data[0].data.results ?? [];
     };
 
@@ -73,86 +75,8 @@ const Container = styled.div`
 
 const Grid = styled(motion.div)`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     grid-gap: 2rem;
-`;
-
-const Card = styled.div`
-    background-color: white;
-    border-radius: 8px;
-    height: 100%;
-    position: relative;
-
-    img {
-        width: 100%;
-        height: 60%;
-        border-top-right-radius: 8px;
-        border-top-left-radius: 8px;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    .favorite {
-        position: absolute;
-        top: 0;
-        right: 10px;
-        width: 50px;
-        height: 50px;
-        background-color: #ce4620;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 5px;
-        cursor: pointer;
-        transform: scale(0.9);
-
-        svg {
-            color: white;
-        }
-    }
-
-    .card__desc {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1rem;
-
-        h4 {
-            text-align: start;
-            color: #1f1f1f;
-            margin-bottom: 10px;
-            margin-top: 5px;
-            font-size: 1.3rem;
-        }
-
-        .star__rating {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            span {
-                color: black;
-                font-size: 14px;
-                margin-left: 10px;
-            }
-            svg {
-                font-size: 1.2rem;
-                color: #ce4620;
-            }
-        }
-    }
-
-    &:hover {
-        h4 {
-            text-decoration: underline;
-            text-decoration-color: #f27121;
-            text-underline-offset: 5px;
-            text-decoration-thickness: 8%;
-        }
-    }
 `;
 
 export default Searched;

@@ -9,9 +9,25 @@ import {
     FavoriteBorder,
     Favorite,
 } from "@material-ui/icons";
+import SavedModel from "./SavedModel";
 
 const CardDescription = ({ data }) => {
     const [favorite, setFavorite] = useState(false);
+
+    const addRecipeToFavorites = () => {
+        setFavorite(true);
+
+        fetch("/api/favorites", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: data.title,
+                recipe: data,
+            }),
+        });
+    };
 
     return (
         <div>
@@ -30,13 +46,11 @@ const CardDescription = ({ data }) => {
                         </div>
                     </div>
                 </Link>
-                <div
-                    className="favorite"
-                    onClick={() => setFavorite(!favorite)}
-                >
+                <div className="favorite" onClick={addRecipeToFavorites}>
                     {favorite ? <Favorite /> : <FavoriteBorder />}
                 </div>
             </Card>
+            <SavedModel />
         </div>
     );
 };

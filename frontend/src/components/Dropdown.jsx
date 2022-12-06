@@ -41,7 +41,7 @@ const Links = styled.div`
         color: black;
         padding: 8px 20px;
         font-weight: 500;
-        border-radius: 5px;
+        border-radius: 3px;
 
         li {
             margin: 2px 0;

@@ -15,11 +15,14 @@ const Navbar = () => {
         setSearchedClick(!searchClick);
     };
 
+    const reload = () => {
+        window.location.href = window.location.origin;
+    };
+
     return (
         <div>
             <Nav>
-                <Logo to={"/"}>
-                    {" "}
+                <Logo onClick={reload}>
                     <GiKnifeFork className="logo" /> Culinaryyy
                 </Logo>
                 {searchClick && <Search showSearched={showSearched} />}
