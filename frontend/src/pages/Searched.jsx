@@ -6,7 +6,6 @@ import CardDescription from "../components/CardDescription";
 import { useQuery } from "@tanstack/react-query";
 
 const Searched = () => {
-    const [favorite, setFavorite] = useState(false);
     let params = useParams();
 
     const fetchSearched = async () => {

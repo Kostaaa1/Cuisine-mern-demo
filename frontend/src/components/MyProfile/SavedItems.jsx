@@ -1,5 +1,6 @@
 import { Lock } from "@material-ui/icons";
 import styled from "styled-components";
+import FavoriteCollection from "./FavoriteCollection";
 
 const SavedItems = () => {
     return (
@@ -21,6 +22,10 @@ const SavedItems = () => {
                         make public.
                     </span>
                     <div className="line__break"></div>
+                </div>
+                <div>
+                    <h3>Collections</h3>
+                    <FavoriteCollection />
                 </div>
             </div>
         </Wrapper>

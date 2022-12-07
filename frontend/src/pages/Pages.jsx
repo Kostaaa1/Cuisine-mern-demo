@@ -92,7 +92,7 @@ const Pages = () => {
                         path="/"
                         element={
                             <>
-                                <Category />
+                                {/* <Category /> */}
                                 <Home />
                             </>
                         }
@@ -101,7 +101,7 @@ const Pages = () => {
                         path="/cuisine/:type"
                         element={
                             <>
-                                <Category />
+                                {/* <Category /> */}
                                 <Cuisine />
                             </>
                         }
@@ -110,7 +110,7 @@ const Pages = () => {
                         path="/searched/:search"
                         element={
                             <>
-                                <Category />
+                                {/* <Category /> */}
                                 <Searched />
                             </>
                         }
@@ -119,7 +119,7 @@ const Pages = () => {
                         path="/recipe/:id"
                         element={
                             <>
-                                <Category />
+                                {/* <Category /> */}
                                 <Recipe />
                             </>
                         }

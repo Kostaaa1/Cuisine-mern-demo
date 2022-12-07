@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import SavedModal from "./SavedModal";
 import {
     Star,
     StarHalf,
@@ -9,10 +9,13 @@ import {
     FavoriteBorder,
     Favorite,
 } from "@material-ui/icons";
-import SavedModel from "./SavedModel";
 
 const CardDescription = ({ data }) => {
     const [favorite, setFavorite] = useState(false);
+
+    useEffect(() => {
+        setFavorite(false);
+    }, []);
 
     const addRecipeToFavorites = () => {
         setFavorite(true);
@@ -50,7 +53,7 @@ const CardDescription = ({ data }) => {
                     {favorite ? <Favorite /> : <FavoriteBorder />}
                 </div>
             </Card>
-            <SavedModel />
+            {favorite && <SavedModal />}
         </div>
     );
 };

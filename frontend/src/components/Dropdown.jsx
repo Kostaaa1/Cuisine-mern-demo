@@ -8,7 +8,7 @@ const Dropdown = () => {
                 <NavLink to={"/account/profile"}>
                     <li>My Profile</li>
                 </NavLink>
-                <NavLink>
+                <NavLink to={"/account/profile/collections"}>
                     <li>Saved Items & Collections</li>
                 </NavLink>
                 <NavLink to={"/account/addRecipe"}>
