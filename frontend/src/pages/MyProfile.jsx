@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import List from "../components/MyProfile/List";
 
 const MyProfile = ({ listContent, onClick, staticList }) => {
