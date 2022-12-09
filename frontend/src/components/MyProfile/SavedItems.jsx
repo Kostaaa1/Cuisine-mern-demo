@@ -1,11 +1,12 @@
 import { Lock } from "@material-ui/icons";
+import { useEffect } from "react";
 import styled from "styled-components";
 import FavoriteCollection from "./FavoriteCollection";
 
 const SavedItems = () => {
     return (
         <Wrapper>
-            <div className="savedItems">
+            <div className="saved__items">
                 <div className="public__section">
                     <h1>Public Profile Settings</h1>
                     <input
@@ -25,7 +26,9 @@ const SavedItems = () => {
                 </div>
                 <div>
                     <h3>Collections</h3>
-                    <FavoriteCollection />
+                    <div className="collection__control">
+                        <FavoriteCollection />
+                    </div>
                 </div>
             </div>
         </Wrapper>
@@ -35,6 +38,19 @@ const SavedItems = () => {
 const Wrapper = styled.form`
     width: 100%;
     padding: 20px;
+
+    .saved__items {
+        h3 {
+            margin-bottom: 20px;
+        }
+
+        .collection__control {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            row-gap: 25px;
+        }
+    }
 
     .public__section {
         display: flex;
