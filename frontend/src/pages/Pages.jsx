@@ -1,5 +1,11 @@
 import Home from "./Home";
-import { Route, Routes, BrowserRouter, useLocation } from "react-router-dom";
+import {
+    Route,
+    Routes,
+    BrowserRouter,
+    useLocation,
+    useParams,
+} from "react-router-dom";
 import Cuisine from "./Cuisine";
 import Recipe from "./Recipe";
 import AddRecipe from "./AddRecipe";
@@ -12,8 +18,7 @@ import PersonalRecipes from "../components/MyProfile/PersonalRecipes";
 import SavedItems from "../components/MyProfile/SavedItems";
 import Reviews from "../components/MyProfile/Reviews";
 import Category from "../components/Category";
-import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Pages = () => {
     const location = useLocation();
@@ -74,83 +79,83 @@ const Pages = () => {
         Reviews,
     };
 
-    const handleClick = (id) => {
-        setLists(
-            lists.map((li) =>
-                li.id === id
-                    ? { ...li, selected: true }
-                    : { ...li, selected: false }
-            )
-        );
-    };
+    useEffect(() => {
+        const route = location.pathname.slice(16);
+
+        if (route !== "") {
+            setLists(
+                lists.map((list) =>
+                    list.route === route
+                        ? { ...list, selected: true }
+                        : { ...list, selected: false }
+                )
+            );
+        }
+    }, [location.pathname]);
 
     return (
         <div>
-            <AnimatePresence exitBeforeEnter>
-                <Routes location={location} key={location.pathname}>
-                    <Route
-                        path="/"
-                        element={
-                            <>
-                                {/* <Category /> */}
-                                <Home />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/cuisine/:type"
-                        element={
-                            <>
-                                {/* <Category /> */}
-                                <Cuisine />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/searched/:search"
-                        element={
-                            <>
-                                {/* <Category /> */}
-                                <Searched />
-                            </>
-                        }
-                    />
-                    <Route
-                        path="/recipe/:id"
-                        element={
-                            <>
-                                {/* <Category /> */}
-                                <Recipe />
-                            </>
-                        }
-                    />
+            <Routes location={location} key={location.pathname}>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            {/* <Category /> */}
+                            <Home />
+                        </>
+                    }
+                />
+                <Route
+                    path="/cuisine/:type"
+                    element={
+                        <>
+                            {/* <Category /> */}
+                            <Cuisine />
+                        </>
+                    }
+                />
+                <Route
+                    path="/searched/:search"
+                    element={
+                        <>
+                            {/* <Category /> */}
+                            <Searched />
+                        </>
+                    }
+                />
+                <Route
+                    path="/recipe/:id"
+                    element={
+                        <>
+                            {/* <Category /> */}
+                            <Recipe />
+                        </>
+                    }
+                />
 
-                    <Route path="/account/addRecipe/" element={<AddRecipe />} />
+                <Route path="/account/addRecipe/" element={<AddRecipe />} />
 
-                    <Route
-                        path="/account/profile"
-                        element={
-                            <div>
-                                <MyProfile
-                                    listContent={lists}
-                                    staticList={StaticList}
-                                    onClick={handleClick}
-                                />
-                            </div>
-                        }
-                    />
-                    <Route
-                        path="/account/profile/:name"
-                        element={
+                <Route
+                    path="/account/profile"
+                    element={
+                        <div>
                             <MyProfile
                                 listContent={lists}
                                 staticList={StaticList}
-                                onClick={handleClick}
                             />
-                        }
-                    />
-                </Routes>
-            </AnimatePresence>
+                        </div>
+                    }
+                />
+                <Route
+                    path="/account/profile/:name"
+                    element={
+                        <MyProfile
+                            listContent={lists}
+                            staticList={StaticList}
+                        />
+                    }
+                />
+            </Routes>
         </div>
     );
 };

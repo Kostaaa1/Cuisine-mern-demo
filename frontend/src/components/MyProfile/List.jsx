@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaHeart, FaUtensilSpoon } from "react-icons/fa";
 import { MdReviews } from "react-icons/md";
 
-const List = ({ list, onClick }) => {
+const List = ({ list }) => {
     const IconList = {
         FaHeart,
         FaUtensilSpoon,
@@ -13,10 +13,7 @@ const List = ({ list, onClick }) => {
 
     return (
         <div>
-            <Li
-                onClick={() => onClick(list.id)}
-                className={list.selected ? "selected" : ""}
-            >
+            <Li className={list.selected ? "selected" : ""}>
                 {list.icon && <Svg />}
                 {list.text}
             </Li>

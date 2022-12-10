@@ -3,7 +3,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import List from "../components/MyProfile/List";
 
-const MyProfile = ({ listContent, onClick, staticList }) => {
+const MyProfile = ({ listContent, staticList }) => {
     return (
         <Container>
             <div className="profile">
@@ -24,7 +24,6 @@ const MyProfile = ({ listContent, onClick, staticList }) => {
                                 <List
                                     className={list.selected ? "selected" : ""}
                                     list={list}
-                                    onClick={onClick}
                                 />
                             </CustomLink>
                         ))}
@@ -32,7 +31,7 @@ const MyProfile = ({ listContent, onClick, staticList }) => {
                 </div>
             </div>
             <div className="components">
-                {listContent.map((list, id) => {
+                {listContent.map((list) => {
                     if (list.selected) {
                         const Component = staticList[list.component];
                         return <Component key={list.id} />;

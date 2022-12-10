@@ -7,7 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const Popular = () => {
     const { isLoading, error, data } = useQuery(["popular"], fetchPopular);
-    console.log(isLoading);
 
     if (isLoading) return <h1 style={{ color: "white" }}>Loading...</h1>;
 

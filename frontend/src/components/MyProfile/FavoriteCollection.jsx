@@ -1,52 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { AppsOutlined } from "@material-ui/icons";
+import { AppsOutlined, VideocamOff } from "@material-ui/icons";
+import {
+    fetchFavoriteRecipes,
+    fetchFavoriteRecipesLength,
+} from "../../fetchers/recipe";
 
 const FavoriteCollection = () => {
     const [mockData, setMockData] = useState([
         {
             data: {
-                image: "https://th.bing.com/th/id/R.72ad85d65b52a367ebb66f5466a8556b?rik=zeV%2bJ7Kb7lCNyA&riu=http%3a%2f%2fweknowyourdreams.com%2fimages%2fgrey%2fgrey-04.jpg&ehk=VFVujJ1Q0KhthB4cdQnwgljyetXvMgjem2gxDcUmkhE%3d&risl=&pid=ImgRaw&r=0",
+                image: "/src/images/gray-background.jpg",
             },
         },
         {
             data: {
-                image: "https://th.bing.com/th/id/R.72ad85d65b52a367ebb66f5466a8556b?rik=zeV%2bJ7Kb7lCNyA&riu=http%3a%2f%2fweknowyourdreams.com%2fimages%2fgrey%2fgrey-04.jpg&ehk=VFVujJ1Q0KhthB4cdQnwgljyetXvMgjem2gxDcUmkhE%3d&risl=&pid=ImgRaw&r=0",
+                image: "/src/images/gray-background.jpg",
             },
         },
         {
             data: {
-                image: "https://th.bing.com/th/id/R.72ad85d65b52a367ebb66f5466a8556b?rik=zeV%2bJ7Kb7lCNyA&riu=http%3a%2f%2fweknowyourdreams.com%2fimages%2fgrey%2fgrey-04.jpg&ehk=VFVujJ1Q0KhthB4cdQnwgljyetXvMgjem2gxDcUmkhE%3d&risl=&pid=ImgRaw&r=0",
+                image: "/src/images/gray-background.jpg",
             },
         },
         {
             data: {
-                image: "https://th.bing.com/th/id/R.72ad85d65b52a367ebb66f5466a8556b?rik=zeV%2bJ7Kb7lCNyA&riu=http%3a%2f%2fweknowyourdreams.com%2fimages%2fgrey%2fgrey-04.jpg&ehk=VFVujJ1Q0KhthB4cdQnwgljyetXvMgjem2gxDcUmkhE%3d&risl=&pid=ImgRaw&r=0",
+                image: "/src/images/gray-background.jpg",
             },
         },
     ]);
-    const [collectionLength, setCollectionLength] = useState(0);
 
-    const fetchFavoriteRecipes = async () => {
-        try {
-            const res = await fetch("/api/favorites");
-            const data = await res.json();
+    const { isLoading, data, isSuccess } = useQuery(["collection"], () =>
+        fetchFavoriteRecipes(mockData)
+    );
 
-            console.log(data);
-            const length = data.length;
-            setCollectionLength(length);
-
-            return mockData.map((x, i) => (data[i] ? data[i] : x));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const { isLoading, data, isSuccess } = useQuery(
-        ["collection"],
-        fetchFavoriteRecipes
+    const { data: collectionLength } = useQuery(
+        ["collectionLength"],
+        fetchFavoriteRecipesLength
     );
 
     return (
