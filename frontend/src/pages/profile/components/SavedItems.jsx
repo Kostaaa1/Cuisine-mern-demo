@@ -1,18 +1,21 @@
 import { Lock } from "@material-ui/icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Button from "../../../common/Button";
 import FavoriteCollection from "./FavoriteCollection";
+import NewCollection from "./NewCollectionModal";
 
 const SavedItems = () => {
+    const [showCollectionModal, setShowCollectionModal] = useState(false);
+
     return (
-        <Wrapper>
+        <Collections>
             <div className="saved__items">
                 <div className="public__section">
-                    <h1>Public Profile Settings</h1>
-                    <input
-                        type="submit"
+                    <h1>Saved Items & Collections</h1>
+                    <Button
+                        onClick={() => setShowCollectionModal(true)}
                         value={"NEW COLLECTION +"}
-                        className={`btn__save`}
                     />
                 </div>
                 <div className="section__info">
@@ -31,11 +34,18 @@ const SavedItems = () => {
                     </div>
                 </div>
             </div>
-        </Wrapper>
+            {showCollectionModal && (
+                <NewCollection
+                    showModal={() =>
+                        setShowCollectionModal(!showCollectionModal)
+                    }
+                />
+            )}
+        </Collections>
     );
 };
 
-const Wrapper = styled.form`
+const Collections = styled.div`
     width: 100%;
     padding: 20px;
 
@@ -61,18 +71,6 @@ const Wrapper = styled.form`
         h1 {
             font-weight: bold;
             font-size: 2.4rem;
-        }
-
-        .btn__save {
-            padding: 20px 35px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            display: block;
-            border: none;
-            border-radius: 5px;
-            letter-spacing: 1.2px;
-            background-color: #ce4620;
         }
     }
 

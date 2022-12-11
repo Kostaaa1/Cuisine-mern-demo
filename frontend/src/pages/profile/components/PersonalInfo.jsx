@@ -1,6 +1,7 @@
 import { KeyboardArrowDown, Lock, SupervisorAccount } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Loading from "../../../common/Loading";
 
 const PersonalInfo = () => {
     const [clicked, setClicked] = useState(true);
@@ -39,7 +40,7 @@ const PersonalInfo = () => {
     };
 
     return (
-        <FormWrap onSubmit={submitForm}>
+        <Form onSubmit={submitForm}>
             <div className="personal__section">
                 <h1>Personal Info</h1>
                 <input
@@ -151,7 +152,7 @@ const PersonalInfo = () => {
                     </>
                 )}
             </DynamicForm>
-        </FormWrap>
+        </Form>
     );
 };
 
@@ -227,7 +228,7 @@ const DynamicForm = styled.div`
     }
 `;
 
-const FormWrap = styled.form`
+const Form = styled.form`
     width: 100%;
     padding: 20px;
 

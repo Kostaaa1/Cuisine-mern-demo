@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { SupervisorAccount } from "@material-ui/icons";
+import Button from "../../../common/Button";
 
 const ChangeProfile = () => {
     return (
         <Wrapper>
             <h1>Personal Recipes</h1>
             <div className="section__info">
-                <h3>Recipes you have created on Allrecipes.</h3>
+                <h3>Recipes you have created on Culinary.</h3>
                 <span>
                     <SupervisorAccount />
                     Other users will see the recipes you've made public.
@@ -16,7 +17,7 @@ const ChangeProfile = () => {
             <div className="recipe__add">
                 <h2>You haven't created any recipes yet.</h2>
                 <p>To add a recipe click the button bellow</p>
-                <button className="highlight">ADD RECIPE +</button>
+                <Button value={"ADD RECIPE +"} />
             </div>
         </Wrapper>
     );
@@ -71,18 +72,6 @@ const Wrapper = styled.div`
             }
         }
     }
-    .highlight {
-        padding: 20px 35px;
-        font-weight: bold;
-        color: white;
-        background-color: #ce4620;
-        display: block;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        letter-spacing: 1.2px;
-    }
-
     .line__break {
         width: 100%;
         height: 1px;

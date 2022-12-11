@@ -22,6 +22,7 @@
         "react-custom-scrollbars": "^4.2.1",
         "react-dom": "experimental",
         "react-icons": "^4.6.0",
+        "react-keyboard-event": "^1.0.7",
         "react-router-dom": "^6.4.2",
         "styled-components": "^5.3.6"
     },

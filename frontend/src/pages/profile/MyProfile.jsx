@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import List from "../components/MyProfile/List";
+import List from "../../pages/profile/components/List";
+// import Img from '../../assets/images/image1.png'
 
 const MyProfile = ({ listContent, staticList }) => {
     return (
         <Container>
             <div className="profile">
                 <div className="profile__greet">
-                    <img src="/src/images/image1.png" alt="" />
+                    <img src="../../src/assets/images/image1.png" alt="" />
                     <div>
                         <h3>Hi, Kosta Arsic</h3>
                         <NavLink className="btn">View Public Profile</NavLink>

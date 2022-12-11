@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { fetchVeggie } from "../fetchers/recipe";
 import "@splidejs/react-splide/css";
+import { fetchVeggie } from "../hooks/get-veggie";
 
 const Veggie = () => {
     const { isLoading, error, data } = useQuery(["veggie"], fetchVeggie);

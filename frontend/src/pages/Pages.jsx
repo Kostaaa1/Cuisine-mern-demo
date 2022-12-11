@@ -1,4 +1,18 @@
-import Home from "./Home";
+// import Home from "./home/Home";
+import Home from "./home/Home";
+import Cuisine from "./Cuisine";
+import Recipe from "./Recipe";
+import AddRecipe from "./AddRecipe";
+import Searched from "./searched/Searched";
+import MyProfile from "./profile/MyProfile";
+import PersonalInfo from "./profile/components/PersonalInfo";
+import PublicProfile from "./profile/components/PublicProfile";
+import ChangePassword from "./profile/components/ChangePassword";
+import PersonalRecipes from "./profile/components/PersonalRecipes";
+import SavedItems from "./profile/components/SavedItems";
+import Reviews from "./profile/components/Reviews";
+// import Category from "./common/Category";
+import { useEffect, useState } from "react";
 import {
     Route,
     Routes,
@@ -6,19 +20,6 @@ import {
     useLocation,
     useParams,
 } from "react-router-dom";
-import Cuisine from "./Cuisine";
-import Recipe from "./Recipe";
-import AddRecipe from "./AddRecipe";
-import Searched from "./Searched";
-import MyProfile from "./MyProfile";
-import PersonalInfo from "../components/MyProfile/PersonalInfo";
-import PublicProfile from "../components/MyProfile/PublicProfile";
-import ChangePassword from "../components/MyProfile/ChangePassword";
-import PersonalRecipes from "../components/MyProfile/PersonalRecipes";
-import SavedItems from "../components/MyProfile/SavedItems";
-import Reviews from "../components/MyProfile/Reviews";
-import Category from "../components/Category";
-import { useEffect, useState } from "react";
 
 const Pages = () => {
     const location = useLocation();
@@ -28,7 +29,7 @@ const Pages = () => {
             text: "Personal Info",
             selected: true,
             component: "PersonalInfo",
-            route: "/",
+            route: "",
         },
         {
             id: 1,
@@ -81,8 +82,9 @@ const Pages = () => {
 
     useEffect(() => {
         const route = location.pathname.slice(16);
+        const currentComponent = lists.filter((list) => list.selected);
 
-        if (route !== "") {
+        if (currentComponent.route !== route) {
             setLists(
                 lists.map((list) =>
                     list.route === route
@@ -96,43 +98,10 @@ const Pages = () => {
     return (
         <div>
             <Routes location={location} key={location.pathname}>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            {/* <Category /> */}
-                            <Home />
-                        </>
-                    }
-                />
-                <Route
-                    path="/cuisine/:type"
-                    element={
-                        <>
-                            {/* <Category /> */}
-                            <Cuisine />
-                        </>
-                    }
-                />
-                <Route
-                    path="/searched/:search"
-                    element={
-                        <>
-                            {/* <Category /> */}
-                            <Searched />
-                        </>
-                    }
-                />
-                <Route
-                    path="/recipe/:id"
-                    element={
-                        <>
-                            {/* <Category /> */}
-                            <Recipe />
-                        </>
-                    }
-                />
-
+                <Route path="/" element={<Home />} />
+                <Route path="/cuisine/:type" element={<Cuisine />} />
+                <Route path="/searched/:search" element={<Searched />} />
+                <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/account/addRecipe/" element={<AddRecipe />} />
 
                 <Route

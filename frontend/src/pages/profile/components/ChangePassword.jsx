@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Lock } from "@material-ui/icons";
+import Button from "../../../common/Button";
 
 const ChangeProfile = () => {
     return (
@@ -17,7 +18,7 @@ const ChangeProfile = () => {
                 </span>
                 <div className="line__break"></div>
             </div>
-            <button className="highlight">RESET PASSWORD</button>
+            <Button value={"RESET PASSWORD"} />
         </Wrapper>
     );
 };
@@ -54,17 +55,6 @@ const Wrapper = styled.div`
                 margin-right: 10px;
             }
         }
-    }
-    .highlight {
-        padding: 20px 35px;
-        font-weight: bold;
-        color: white;
-        background-color: #ce4620;
-        display: block;
-        border: none;
-        border-radius: 5px;
-        letter-spacing: 1.2px;
-        cursor: pointer;
     }
 
     .line__break {

@@ -2,8 +2,8 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "@splidejs/react-splide/css";
-import { fetchPopular } from "../fetchers/recipe";
 import { useQuery } from "@tanstack/react-query";
+import { fetchPopular } from "../hooks/fetch-popular";
 
 const Popular = () => {
     const { isLoading, error, data } = useQuery(["popular"], fetchPopular);

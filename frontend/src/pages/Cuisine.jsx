@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import CardDescription from "../components/CardDescription";
+import CardDescription from "../common/CardDescription";
 
 const Cuisine = () => {
     const [cuisine, setCuisine] = useState([]);

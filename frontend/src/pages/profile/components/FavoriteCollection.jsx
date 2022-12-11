@@ -6,7 +6,7 @@ import { AppsOutlined, VideocamOff } from "@material-ui/icons";
 import {
     fetchFavoriteRecipes,
     fetchFavoriteRecipesLength,
-} from "../../fetchers/recipe";
+} from "../hooks/get-favorites";
 
 const FavoriteCollection = () => {
     const [mockData, setMockData] = useState([

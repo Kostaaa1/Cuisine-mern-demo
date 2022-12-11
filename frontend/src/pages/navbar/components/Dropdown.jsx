@@ -15,7 +15,7 @@ const Dropdown = () => {
                     <li>Add a Recipe</li>
                 </NavLink>
 
-                <div className="line"></div>
+                <div className="line__break"></div>
 
                 <NavLink>
                     <li>Help</li>{" "}
@@ -42,13 +42,14 @@ const Links = styled.div`
         padding: 8px 20px;
         font-weight: 500;
         border-radius: 3px;
+        transition: opacity 150ms ease-in-out;
 
         li {
             margin: 2px 0;
             font-size: 16px;
         }
 
-        .line {
+        .line__break {
             width: 100%;
             margin: 10px auto 15px auto;
             border: 1px solid rgba(0, 0, 0, 0.14);

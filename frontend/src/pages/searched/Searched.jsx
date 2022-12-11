@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import CardDescription from "../components/CardDescription";
+import CardDescription from "../../common/CardDescription";
 import { useQuery } from "@tanstack/react-query";
 
 const Searched = () => {

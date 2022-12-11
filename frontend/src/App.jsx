@@ -1,8 +1,8 @@
 import Pages from "./pages/Pages";
-import Search from "./components/Search";
+import Search from "./pages/navbar/components/Search";
 import { BrowserRouter, Link } from "react-router-dom";
 import "./styles.css";
-import Navbar from "./pages/Navbar";
+import Navbar from "./pages/navbar/Navbar";
 
 function App() {
     return (
