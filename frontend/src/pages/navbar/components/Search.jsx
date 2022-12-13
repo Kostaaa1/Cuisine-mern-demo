@@ -10,7 +10,7 @@ const Search = ({ showSearched }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        navigate("/searched/" + input);
+        navigate("/searched/" + input.toLowerCase());
 
         setInput("");
     };
@@ -41,23 +41,24 @@ const SearchForm = styled.form`
     padding: 0 0 0 10px;
 
     h4 {
-        color: white;
+        color: var(--main-color);
         font-weight: 500;
         margin-right: 20px;
     }
 
     .wrapper {
-        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
+        height: 100%;
         position: relative;
 
         input {
             width: 100%;
             height: 80%;
-            border: none;
+            border: 1px solid var(--main-color);
+            border-right: none;
             padding: 0 14px;
             font-size: 1rem;
 
@@ -71,13 +72,14 @@ const SearchForm = styled.form`
             padding: 12px;
             color: white;
             cursor: pointer;
-            background-color: #ce4620;
+            background-color: var(--red-color);
         }
 
         .close {
-            color: white;
-            font-size: 2.8rem;
+            color: var(--main-color);
+            font-size: 2.2rem;
             cursor: pointer;
+            margin-left: 5px;
         }
     }
 `;

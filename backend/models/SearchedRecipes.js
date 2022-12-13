@@ -5,4 +5,4 @@ const SearchedRecipeSchema = new mongoose.Schema({
     data: {},
 });
 
-module.exports = mongoose.model("Searched", SearchedRecipeSchema);
+module.exports = mongoose.model("Search", SearchedRecipeSchema);

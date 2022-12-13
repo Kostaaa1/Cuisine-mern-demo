@@ -2,6 +2,7 @@ import { GiKnifeFork } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Search from "./components/Search";
+import Category from "./components/Category";
 import { useState } from "react";
 import Dropdown from "./components/Dropdown";
 import { ArrowDropDown, AccountCircle } from "@material-ui/icons";
@@ -20,21 +21,22 @@ const Navbar = () => {
     };
 
     return (
-        <div>
+        <NavbarSection>
             <Nav>
                 <Logo onClick={reload}>
-                    <GiKnifeFork className="logo" /> Culinaryyy
+                    Culinaryyy
+                    <GiKnifeFork className="logo" />
                 </Logo>
                 {searchClick && <Search showSearched={showSearched} />}
                 {!searchClick && (
                     <ul>
-                        <li>
+                        <li className="list">
                             <FaSearch
                                 className="search"
                                 onClick={showSearched}
                             />
                         </li>
-                        <li className="dropdown">
+                        <li className="dropdown list">
                             <FaUserCircle className="user" /> My account
                             <ArrowDropDown className="arrow" />
                             <Links>
@@ -62,27 +64,38 @@ const Navbar = () => {
                                 </ul>
                             </Links>
                         </li>
-                        <li>About Us</li>
-                        <li>Contact</li>
-                        <li>Newsletter</li>
+                        <li className="underline list">About Us</li>
+                        <li className="underline list">Contact</li>
+                        <li className="underline">Newsletter</li>
                     </ul>
                 )}
             </Nav>
-        </div>
+            <Category />
+        </NavbarSection>
     );
 };
 
-const Nav = styled.div`
-    padding: 1.8rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+const NavbarSection = styled.div`
     position: relative;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
     width: 100%;
+    padding: 0 280px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+`;
+
+const Nav = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
 
     ul {
         display: flex;
-        color: white;
+        color: var(--main-color);
         font-size: 16px;
         font-weight: 400;
         width: 500px;
@@ -96,22 +109,29 @@ const Nav = styled.div`
         align-items: center;
         cursor: pointer;
         height: 50px;
-        /* text-decoration: underline; */
-        /* text-decoration-color: #ce4620; */
-        /* text-underline-offset: 5px; */
-        /* text-decoration-thickness: 10%; */
+        letter-spacing: -0.5px;
 
         .user {
             margin-right: 7px;
-            color: #ce4620;
+            color: var(--red-color);
             width: 25px;
             height: 25px;
             background-color: white;
             border-radius: 50%;
         }
-        .search {
-            font-size: 1.3rem;
-        }
+    }
+
+    .list {
+        padding: 0 12px;
+        height: 24px;
+        border-right: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .underline:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--red-color);
+        text-underline-offset: 5px;
+        text-decoration-thickness: 10%;
     }
 
     .dropdown {
@@ -121,12 +141,6 @@ const Nav = styled.div`
             visibility: visible;
         }
     }
-
-    .logo {
-        font-size: 2rem;
-        color: white;
-        margin-right: 14px;
-    }
 `;
 
 const Logo = styled(Link)`
@@ -134,10 +148,16 @@ const Logo = styled(Link)`
     font-size: 1.5rem;
     font-weight: 100;
     font-family: "Lobster two", cursive;
-    color: white;
+    color: #131111;
     font-style: italic;
     display: flex;
     justify-content: center;
+
+    .logo {
+        font-size: 1.8rem;
+        color: var(--main-color);
+        margin-left: 10px;
+    }
 `;
 
 const Links = styled.div`
@@ -148,6 +168,7 @@ const Links = styled.div`
         width: 230px;
         background: white;
         top: 100%;
+        left: 85%;
         transform: translateX(-62%);
         z-index: 1000;
         max-height: 500px;

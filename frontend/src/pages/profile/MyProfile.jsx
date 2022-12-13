@@ -49,12 +49,11 @@ const CustomLink = styled(NavLink)`
 `;
 
 const Container = styled.div`
-    min-height: 100vh;
     border-radius: 5px;
     width: 100%;
     background-color: #fffdfb;
     margin-top: 20px;
-    padding: 60px 100px;
+    padding: 60px 0;
     display: flex;
 
     .components {
@@ -75,6 +74,7 @@ const Container = styled.div`
             margin: 12px;
             width: 60px;
             height: 60px;
+            pointer-events: none;
         }
 
         h3 {

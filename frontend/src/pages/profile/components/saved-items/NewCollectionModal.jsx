@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Button from "../../../common/Button";
+import Button from "../../../../common/Button";
 import { Close, Lock } from "@material-ui/icons";
 import { useEffect } from "react";
 
@@ -20,7 +20,6 @@ const NewCollection = ({ showModal }) => {
             collectionPrivate,
         };
 
-        console.log(collectionData);
         showModal();
     };
     const handle = (e) => {
@@ -107,6 +106,7 @@ const NewCollection = ({ showModal }) => {
 
 const Modal = styled(motion.div)`
     position: fixed;
+    overflow: none;
     content: "";
     top: 0;
     left: 0;

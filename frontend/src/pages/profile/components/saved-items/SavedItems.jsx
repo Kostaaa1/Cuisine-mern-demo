@@ -1,9 +1,9 @@
 import { Lock } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Button from "../../../common/Button";
+import Button from "../../../../common/Button";
 import FavoriteCollection from "./FavoriteCollection";
-import NewCollection from "./NewCollectionModal";
+import NewCollectionModal from "./NewCollectionModal";
 
 const SavedItems = () => {
     const [showCollectionModal, setShowCollectionModal] = useState(false);
@@ -35,7 +35,7 @@ const SavedItems = () => {
                 </div>
             </div>
             {showCollectionModal && (
-                <NewCollection
+                <NewCollectionModal
                     showModal={() =>
                         setShowCollectionModal(!showCollectionModal)
                     }

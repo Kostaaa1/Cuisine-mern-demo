@@ -24,6 +24,15 @@ const SavedModal = () => {
         }
     };
 
+    const handleEsc = (e) => {
+        if (e.key !== "Escape") return;
+        setShowModal("none");
+    };
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleEsc);
+    }, []);
+
     return (
         <Modal
             animate={{ opacity: 1 }}

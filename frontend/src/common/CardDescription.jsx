@@ -63,6 +63,7 @@ const Card = styled.div`
     border-radius: 8px;
     height: 100%;
     position: relative;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
 
     img {
         width: 100%;

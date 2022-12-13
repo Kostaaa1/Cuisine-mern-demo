@@ -8,16 +8,23 @@
     box-sizing: border-box;
 }
 
+:root {
+    --main-color: #0d0d0d;
+    --red-color: #ce4620;
+    --grey-color: #6f6f6f;
+}
+
 body {
-    background: url("https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?cs=srgb&dl=pexels-engin-akyurt-1435895.jpg&fm=jpg&_gl=1*1w33c3t*_ga*NzExOTIwNTg2LjE2NjYxMDk2MTA.*_ga_8JE65Q40S6*MTY2NjgyNTUwMC4yLjEuMTY2NjgyNTk5MC4wLjAuMA..")
+    /* background: url("https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?cs=srgb&dl=pexels-engin-akyurt-1435895.jpg&fm=jpg&_gl=1*1w33c3t*_ga*NzExOTIwNTg2LjE2NjYxMDk2MTA.*_ga_8JE65Q40S6*MTY2NjgyNTUwMC4yLjEuMTY2NjgyNTk5MC4wLjAuMA..")
         no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover; */
     overflow-y: overlay;
     scroll-behavior: smooth;
-    margin: 0 14%;
+    min-height: 100vh;
+    /* margin: 0 14%; */
 }
 
 ::-webkit-scrollbar {
@@ -32,10 +39,10 @@ body {
 h1,
 h2,
 h3 {
-    letter-spacing: -1.2px;
+    letter-spacing: -1.1px;
 }
 
-body::after {
+/* body::after {
     background-color: rgba(0, 0, 0, 0.45);
     top: 0;
     left: 0;
@@ -44,7 +51,7 @@ body::after {
     position: fixed;
     z-index: -1;
     content: "";
-}
+} */
 
 img {
     display: block;

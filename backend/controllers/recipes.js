@@ -1,6 +1,6 @@
 const Popular = require("../models/Recipe");
 const Cuisine = require("../models/Cuisine");
-const SearchedRecipes = require("../models/SearchedRecipes");
+const Searched = require("../models/SearchedRecipes");
 const Veggie = require("../models/Veggie");
 const Info = require("../models/Info");
 const FavoritesRecipe = require("../models/FavoritesRecipe");
@@ -32,7 +32,7 @@ module.exports = {
     },
     getSearched: async (req, res) => {
         try {
-            const cuisine = await SearchedRecipes.find({
+            const cuisine = await Searched.find({
                 name: req.params.query,
             });
             res.json(cuisine);
@@ -42,7 +42,7 @@ module.exports = {
     },
     createSearched: async (req, res) => {
         try {
-            const searched = await SearchedRecipes.create({
+            const searched = await Searched.create({
                 name: req.body.name,
                 data: req.body.data,
             });

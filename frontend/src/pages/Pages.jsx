@@ -9,7 +9,7 @@ import PersonalInfo from "./profile/components/PersonalInfo";
 import PublicProfile from "./profile/components/PublicProfile";
 import ChangePassword from "./profile/components/ChangePassword";
 import PersonalRecipes from "./profile/components/PersonalRecipes";
-import SavedItems from "./profile/components/SavedItems";
+import SavedItems from "./profile/components/saved-items/SavedItems";
 import Reviews from "./profile/components/Reviews";
 // import Category from "./common/Category";
 import { useEffect, useState } from "react";
@@ -20,6 +20,7 @@ import {
     useLocation,
     useParams,
 } from "react-router-dom";
+import styled from "styled-components";
 
 const Pages = () => {
     const location = useLocation();
@@ -70,7 +71,6 @@ const Pages = () => {
             route: "/reviews",
         },
     ]);
-
     const StaticList = {
         PersonalInfo,
         PublicProfile,
@@ -96,7 +96,7 @@ const Pages = () => {
     }, [location.pathname]);
 
     return (
-        <div>
+        <Wrapper>
             <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Home />} />
                 <Route path="/cuisine/:type" element={<Cuisine />} />
@@ -125,8 +125,13 @@ const Pages = () => {
                     }
                 />
             </Routes>
-        </div>
+        </Wrapper>
     );
 };
+
+const Wrapper = styled.div`
+    padding: 0 280px;
+    min-height: 100vh;
+`;
 
 export default Pages;

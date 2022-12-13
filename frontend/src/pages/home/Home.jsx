@@ -1,4 +1,5 @@
 import Popular from "./components/Popular";
+import Hero from "./components/Hero";
 import Veggie from "./components/Veggie";
 import { motion } from "framer-motion";
 
@@ -10,8 +11,9 @@ const Home = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <Popular />
-            <Veggie />
+            {/* <Hero /> */}
+            {/* <Popular /> */}
+            {/* <Veggie /> */}
         </motion.div>
     );
 };

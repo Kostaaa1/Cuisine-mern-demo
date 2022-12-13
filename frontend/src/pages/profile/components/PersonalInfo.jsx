@@ -190,7 +190,7 @@ const DynamicForm = styled.div`
         padding: 0 2rem;
 
         svg {
-            transition: all 0.3s 0s ease-in-out;
+            transition: all 0.2s 0s ease-in-out;
         }
 
         .click {
