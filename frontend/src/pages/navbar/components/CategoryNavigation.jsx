@@ -1,7 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const Category = () => {
+    const navigate = useNavigate();
+    const categoryNavigation = (query) => {
+        navigate("/category/" + query);
+    };
+
     const [categoryData, setCategoryData] = useState([
         {
             name: "DINNERS",
@@ -28,7 +35,7 @@ const Category = () => {
             name: "INGEDIENTS",
             categories: [
                 { list: "Chicken", query: "chicken" },
-                { list: "Beef", query: "beed" },
+                { list: "Beef", query: "beef" },
                 { list: "Pork", query: "pork" },
                 { list: "Pasta", query: "pasta" },
                 { list: "Fruits", query: "Fruits" },
@@ -48,15 +55,30 @@ const Category = () => {
                 { list: "Japanese", query: "japenese" },
             ],
         },
+        {
+            name: "OCCASIONS",
+            categories: [
+                { list: "Christmas", query: "christmas" },
+                { list: "Thanksgiving", query: "thanksgiving" },
+                { list: "Hanukkah", query: "hanukkah" },
+                { list: "Easter", query: "easter" },
+            ],
+        },
     ]);
     return (
         <CategorySection>
-            {categoryData.map((category) => (
-                <Wrapper>
+            {categoryData.map((category, id) => (
+                <Wrapper key={id}>
                     <h5>{category.name}</h5>
                     <CategoryDropdown>
-                        {category.categories.map((data) => (
-                            <li> {data.list} </li>
+                        {category.categories.map((data, id) => (
+                            <li
+                                key={id}
+                                onClick={() => categoryNavigation(data.query)}
+                            >
+                                {" "}
+                                {data.list}{" "}
+                            </li>
                         ))}
                     </CategoryDropdown>
                 </Wrapper>
@@ -101,18 +123,19 @@ const CategoryDropdown = styled.ul`
     visibility: hidden;
     top: 80%;
     left: 0;
-    min-height: 300px;
-    width: 200px;
+    min-height: 100%;
+    width: 180px;
     border: 1px solid rgba(0, 0, 0, 0.14);
     background-color: white;
     color: var(--main-color);
     list-style: none;
     display: flex;
-    justify-content: space-around;
+    border-radius: 3px;
     flex-direction: column;
+    z-index: 10;
 
     li {
-        margin: 2px;
+        margin: 12px 2px;
         padding: 0 6px;
         font-size: 16px;
         color: var(--grey-color);

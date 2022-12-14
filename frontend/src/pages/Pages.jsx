@@ -1,4 +1,3 @@
-// import Home from "./home/Home";
 import Home from "./home/Home";
 import Cuisine from "./Cuisine";
 import Recipe from "./Recipe";
@@ -10,6 +9,7 @@ import PublicProfile from "./profile/components/PublicProfile";
 import ChangePassword from "./profile/components/ChangePassword";
 import PersonalRecipes from "./profile/components/PersonalRecipes";
 import SavedItems from "./profile/components/saved-items/SavedItems";
+import Category from "./category/Category";
 import Reviews from "./profile/components/Reviews";
 // import Category from "./common/Category";
 import { useEffect, useState } from "react";
@@ -101,6 +101,7 @@ const Pages = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/cuisine/:type" element={<Cuisine />} />
                 <Route path="/searched/:search" element={<Searched />} />
+                <Route path="/category/:recipe" element={<Category />} />
                 <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/account/addRecipe/" element={<AddRecipe />} />
 
@@ -130,7 +131,7 @@ const Pages = () => {
 };
 
 const Wrapper = styled.div`
-    padding: 0 280px;
+    padding: 0 320px;
     min-height: 100vh;
 `;
 

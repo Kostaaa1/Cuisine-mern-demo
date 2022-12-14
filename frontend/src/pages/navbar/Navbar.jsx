@@ -2,7 +2,7 @@ import { GiKnifeFork } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Search from "./components/Search";
-import Category from "./components/Category";
+import Category from "./components/CategoryNavigation";
 import { useState } from "react";
 import Dropdown from "./components/Dropdown";
 import { ArrowDropDown, AccountCircle } from "@material-ui/icons";
@@ -81,7 +81,7 @@ const NavbarSection = styled.div`
     justify-content: space-around;
     flex-direction: column;
     width: 100%;
-    padding: 0 280px;
+    padding: 0 320px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
     margin-top: 20px;
 `;
@@ -146,7 +146,7 @@ const Nav = styled.div`
 const Logo = styled(Link)`
     text-decoration: none;
     font-size: 1.5rem;
-    font-weight: 100;
+    font-weight: 600;
     font-family: "Lobster two", cursive;
     color: #131111;
     font-style: italic;
@@ -156,7 +156,7 @@ const Logo = styled(Link)`
     .logo {
         font-size: 1.8rem;
         color: var(--main-color);
-        margin-left: 10px;
+        margin-left: 4px;
     }
 `;
 

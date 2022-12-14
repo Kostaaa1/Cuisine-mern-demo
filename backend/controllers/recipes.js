@@ -2,6 +2,7 @@ const Popular = require("../models/Recipe");
 const Cuisine = require("../models/Cuisine");
 const Searched = require("../models/SearchedRecipes");
 const Veggie = require("../models/Veggie");
+const Categorized = require("../models/CategorizedRecipes");
 const Info = require("../models/Info");
 const FavoritesRecipe = require("../models/FavoritesRecipe");
 
@@ -55,6 +56,27 @@ module.exports = {
         try {
             const info = await Info.find({ id: req.params.id });
             res.json(info);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getCategorized: async (req, res) => {
+        try {
+            const recipe = await Categorized.find({
+                name: req.params.query,
+            });
+            res.json(recipe);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    createCategorized: async (req, res) => {
+        try {
+            const categorized = await Categorized.create({
+                name: req.body.name,
+                data: req.body.data,
+            });
+            res.json(categorized);
         } catch (error) {
             console.log(error);
         }

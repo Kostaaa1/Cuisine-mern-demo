@@ -12,22 +12,22 @@ const FavoriteCollection = () => {
     const [mockData, setMockData] = useState([
         {
             data: {
-                image: "/src/images/gray-background.jpg",
+                image: "/src/assets/images/gray-background.jpg",
             },
         },
         {
             data: {
-                image: "/src/images/gray-background.jpg",
+                image: "/src/assets/images/gray-background.jpg",
             },
         },
         {
             data: {
-                image: "/src/images/gray-background.jpg",
+                image: "/src/assets/images/gray-background.jpg",
             },
         },
         {
             data: {
-                image: "/src/images/gray-background.jpg",
+                image: "/src/assets/images/gray-background.jpg",
             },
         },
     ]);

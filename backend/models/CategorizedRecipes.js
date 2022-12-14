@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const SearchedRecipeSchema = new mongoose.Schema({
+const CategorizedSchema = new mongoose.Schema({
     name: { type: String, unique: true, required: true },
     data: {},
 });
 
-module.exports = mongoose.model("Search", SearchedRecipeSchema);
+module.exports = mongoose.model("Category", CategorizedSchema);

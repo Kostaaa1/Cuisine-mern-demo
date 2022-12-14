@@ -52,8 +52,8 @@ const Searched = () => {
                 transition={{ duration: 0.5 }}
             >
                 {isSuccess &&
-                    data.map((searched) => (
-                        <CardDescription key={searched.id} data={searched} />
+                    data.map((recipe) => (
+                        <CardDescription key={recipe.id} data={recipe} />
                     ))}
 
                 {isLoading && <h2 style={{ color: "white" }}>Loading...</h2>}
@@ -67,7 +67,7 @@ const Container = styled.div`
     flex-direction: column;
 
     h2 {
-        color: white;
+        color: var(--main-color);
         margin: 40px 0;
     }
 `;
