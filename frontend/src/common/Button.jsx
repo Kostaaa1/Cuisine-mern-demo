@@ -24,8 +24,9 @@ const Btn = styled.button`
     cursor: pointer;
     display: block;
     border: none;
+    font-size: 14px;
     border-radius: 5px;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.1px;
     background-color: #ce4620;
 `;
 

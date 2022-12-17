@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { AppsOutlined, VideocamOff } from "@material-ui/icons";
 import {
     fetchFavoriteRecipes,
@@ -44,7 +45,7 @@ const FavoriteCollection = () => {
     return (
         <Collection>
             {isSuccess && (
-                <>
+                <CustomLink to={"/account/profile/saved-items"}>
                     <div className="collection__layout">
                         {data.map((recipe, id) => (
                             <img key={id} src={recipe.data.image} alt="" />
@@ -58,18 +59,22 @@ const FavoriteCollection = () => {
                             <AppsOutlined /> Collection // {collectionLength}
                         </span>
                     </div>
-                </>
+                </CustomLink>
             )}
         </Collection>
     );
 };
 
+const CustomLink = styled(NavLink)`
+    text-decoration: none;
+    color: var(--main-color);
+`;
+
 const Collection = styled.div`
     display: flex;
     flex-direction: column;
-    width: 32%;
+    width: 30%;
     font-size: 14px;
-
     border: 1px solid rgba(0, 0, 0, 0.2);
 
     .collection__description {
@@ -104,7 +109,7 @@ const Collection = styled.div`
 
             &:hover {
                 text-decoration: underline;
-                text-decoration-color: #111;
+                text-decoration-color: var(--main-color);
                 text-underline-offset: 5px;
                 text-decoration-thickness: 10%;
             }

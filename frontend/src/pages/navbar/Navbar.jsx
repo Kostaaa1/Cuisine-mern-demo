@@ -21,86 +21,91 @@ const Navbar = () => {
     };
 
     return (
-        <NavbarSection>
+        <Header>
             <Nav>
-                <Logo onClick={reload}>
-                    Culinaryyy
-                    <GiKnifeFork className="logo" />
-                </Logo>
-                {searchClick && <Search showSearched={showSearched} />}
-                {!searchClick && (
-                    <ul>
-                        <li className="list">
-                            <FaSearch
-                                className="search"
-                                onClick={showSearched}
-                            />
-                        </li>
-                        <li className="dropdown list">
-                            <FaUserCircle className="user" /> My account
-                            <ArrowDropDown className="arrow" />
-                            <Links>
-                                <ul className="user__links">
-                                    <NavLink to={"/account/profile"}>
-                                        <li>My Profile</li>
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/account/profile/collections"}
-                                    >
-                                        <li>Saved Items & Collections</li>
-                                    </NavLink>
-                                    <NavLink to={"/account/addRecipe"}>
-                                        <li>Add a Recipe</li>
-                                    </NavLink>
+                <Control>
+                    <Logo onClick={reload}>
+                        Culinaryyy
+                        <GiKnifeFork className="logo" />
+                    </Logo>
+                    {searchClick && <Search showSearched={showSearched} />}
+                    {!searchClick && (
+                        <ul className="wrapper">
+                            <li className="list">
+                                <FaSearch
+                                    className="search"
+                                    onClick={showSearched}
+                                />
+                            </li>
+                            <li className="dropdown list">
+                                <FaUserCircle className="user" /> My account
+                                <ArrowDropDown className="arrow" />
+                                <Links>
+                                    <ul className="user__links">
+                                        <NavLink to={"/account/profile"}>
+                                            <li>My Profile</li>
+                                        </NavLink>
+                                        <NavLink
+                                            to={"/account/profile/collections"}
+                                        >
+                                            <li>Saved Items & Collections</li>
+                                        </NavLink>
+                                        <NavLink to={"/account/addRecipe"}>
+                                            <li>Add a Recipe</li>
+                                        </NavLink>
 
-                                    <div className="line__break"></div>
+                                        <div className="line__break"></div>
 
-                                    <NavLink>
-                                        <li>Help</li>{" "}
-                                    </NavLink>
-                                    <NavLink>
-                                        <li>Log Out</li>{" "}
-                                    </NavLink>
-                                </ul>
-                            </Links>
-                        </li>
-                        <li className="underline list">About Us</li>
-                        <li className="underline list">Contact</li>
-                        <li className="underline">Newsletter</li>
-                    </ul>
-                )}
+                                        <NavLink>
+                                            <li>Help</li>{" "}
+                                        </NavLink>
+                                        <NavLink>
+                                            <li>Log Out</li>{" "}
+                                        </NavLink>
+                                    </ul>
+                                </Links>
+                            </li>
+                            <li className="underline list">About Us</li>
+                            <li className="underline list">Contact</li>
+                            <li className="underline">Newsletter</li>
+                        </ul>
+                    )}
+                </Control>
+                <Category />
             </Nav>
-            <Category />
-        </NavbarSection>
+        </Header>
     );
 };
 
-const NavbarSection = styled.div`
+const Header = styled.header`
     position: relative;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    width: 100%;
-    padding: 0 320px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-    margin-top: 20px;
+    max-width: 100vw;
+    box-shadow: 0 0.125rem 0.375rem rgb(0 0 0 / 15%);
+    margin-top: 30px;
 `;
 
-const Nav = styled.div`
-    width: 100%;
+const Control = styled.div`
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+`;
+
+const Nav = styled.nav`
+    display: flex;
+    flex-direction: column;
+    width: 1300px;
+    margin: 0 auto;
     margin-bottom: 10px;
 
-    ul {
+    .wrapper {
         display: flex;
         color: var(--main-color);
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
-        width: 500px;
+        width: 480px;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
 
     ul li {
@@ -110,6 +115,7 @@ const Nav = styled.div`
         cursor: pointer;
         height: 50px;
         letter-spacing: -0.5px;
+        /* outline: 1px solid black; */
 
         .user {
             margin-right: 7px;
@@ -119,10 +125,16 @@ const Nav = styled.div`
             background-color: white;
             border-radius: 50%;
         }
+
+        .search {
+            color: var(--grey-color);
+            font-size: 1.1rem;
+        }
     }
 
     .list {
-        padding: 0 12px;
+        padding-right: 20px;
+        /* padding: 0 16px 0 -10px; */
         height: 24px;
         border-right: 1px solid rgba(0, 0, 0, 0.15);
     }
@@ -148,7 +160,7 @@ const Logo = styled(Link)`
     font-size: 1.5rem;
     font-weight: 600;
     font-family: "Lobster two", cursive;
-    color: #131111;
+    color: var(--main-color);
     font-style: italic;
     display: flex;
     justify-content: center;
@@ -168,16 +180,16 @@ const Links = styled.div`
         width: 230px;
         background: white;
         top: 100%;
-        left: 85%;
-        transform: translateX(-62%);
-        z-index: 1000;
-        max-height: 500px;
+        left: 0;
+        transform: translateX(-5%);
+        z-index: 10;
         flex-direction: column;
         color: black;
         padding: 8px 20px;
         font-weight: 500;
         border-radius: 3px;
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+        max-height: 500px;
 
         li {
             margin: 2px 0;

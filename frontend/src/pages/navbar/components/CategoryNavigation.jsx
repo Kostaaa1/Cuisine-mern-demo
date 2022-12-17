@@ -87,9 +87,9 @@ const Category = () => {
     );
 };
 const CategorySection = styled.div`
-    margin-top: 20px;
     display: flex;
     flex-direction: row;
+    margin-top: 22px;
 `;
 const Wrapper = styled.div`
     position: relative;
@@ -121,9 +121,10 @@ const Wrapper = styled.div`
 const CategoryDropdown = styled.ul`
     position: absolute;
     visibility: hidden;
-    top: 80%;
+    top: 75%;
     left: 0;
-    min-height: 100%;
+    transform: translate(-5%);
+    max-height: 260px;
     width: 180px;
     border: 1px solid rgba(0, 0, 0, 0.14);
     background-color: white;
@@ -138,7 +139,7 @@ const CategoryDropdown = styled.ul`
         margin: 12px 2px;
         padding: 0 6px;
         font-size: 16px;
-        color: var(--grey-color);
+        color: var(--main-color);
         cursor: pointer;
 
         &:hover {

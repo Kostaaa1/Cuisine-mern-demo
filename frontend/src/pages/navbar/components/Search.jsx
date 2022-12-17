@@ -36,7 +36,7 @@ const SearchForm = styled.form`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 500px;
+    width: 480px;
     height: 50px;
     padding: 0 0 0 10px;
 

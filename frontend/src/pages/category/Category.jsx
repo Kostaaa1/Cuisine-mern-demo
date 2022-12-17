@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 const Category = () => {
     const params = useParams();
+
     useEffect(() => {
         fetchCategorized();
     }, []);
@@ -16,27 +17,6 @@ const Category = () => {
         const data = await res.json();
 
         return data[0].data.results ?? [];
-
-        // const res = await fetch(
-        //     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${
-        //         import.meta.env.VITE_API_KEY
-        //     }&number=30&query=${params.recipe}`
-        // );
-        // const data = await res.json();
-        // console.log(data);
-
-        // if (data.results.length === 0) return [];
-
-        // fetch("/api/category/createCategorized", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         name: params.recipe,
-        //         data: data,
-        //     }),
-        // });
     };
 
     const { isLoading, data, isSuccess } = useQuery(

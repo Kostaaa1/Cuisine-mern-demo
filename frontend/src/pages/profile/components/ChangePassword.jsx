@@ -1,23 +1,19 @@
 import styled from "styled-components";
 import { Lock } from "@material-ui/icons";
 import Button from "../../../common/Button";
+import SectionInfo from "../../../common/SectionInfo";
 
 const ChangeProfile = () => {
     return (
         <Wrapper>
             <h1>Change Password</h1>
-            <div className="section__info">
-                <h3>
-                    The information on this page will be displayed on your
-                    public profile, which is visible to other users.
-                </h3>
-                <span>
-                    <Lock />
-                    The information on this page will be displayed publicly and
-                    will be visible to others
-                </span>
-                <div className="line__break"></div>
-            </div>
+            <SectionInfo
+                value={`The information on this page will be displayed on your
+                    public profile, which is visible to other users.`}
+                text={"Your password will always remain private."}
+                icon={<Lock />}
+            />
+            <div className="line__break"></div>
             <Button value={"RESET PASSWORD"} />
         </Wrapper>
     );

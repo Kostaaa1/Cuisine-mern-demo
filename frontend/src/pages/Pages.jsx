@@ -8,6 +8,7 @@ import PersonalInfo from "./profile/components/PersonalInfo";
 import PublicProfile from "./profile/components/PublicProfile";
 import ChangePassword from "./profile/components/ChangePassword";
 import PersonalRecipes from "./profile/components/PersonalRecipes";
+import Collections from "./profile/components/collections/Collections";
 import SavedItems from "./profile/components/saved-items/SavedItems";
 import Category from "./category/Category";
 import Reviews from "./profile/components/Reviews";
@@ -51,7 +52,7 @@ const Pages = () => {
             text: "Saved Items & Collections",
             icon: "FaHeart",
             selected: false,
-            component: "SavedItems",
+            component: "Collections",
             route: "/collections",
         },
         {
@@ -64,11 +65,16 @@ const Pages = () => {
         },
         {
             id: 5,
-            text: `  Reviews`,
+            text: `Reviews`,
             selected: false,
             icon: "MdReviews",
             component: "Reviews",
             route: "/reviews",
+        },
+        {
+            id: 6,
+            component: "SavedItems",
+            route: "/saved-items",
         },
     ]);
     const StaticList = {
@@ -76,8 +82,9 @@ const Pages = () => {
         PublicProfile,
         ChangePassword,
         PersonalRecipes,
-        SavedItems,
+        Collections,
         Reviews,
+        SavedItems,
     };
 
     useEffect(() => {
@@ -131,7 +138,8 @@ const Pages = () => {
 };
 
 const Wrapper = styled.div`
-    padding: 0 320px;
+    width: 1300px;
+    margin: 0 auto;
     min-height: 100vh;
 `;
 

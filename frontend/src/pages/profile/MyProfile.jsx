@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { NavLink, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import List from "../../pages/profile/components/List";
+import ButtonBorder from "../../common/ButtonBorder";
 // import Img from '../../assets/images/image1.png'
 
 const MyProfile = ({ listContent, staticList }) => {
@@ -12,22 +13,27 @@ const MyProfile = ({ listContent, staticList }) => {
                     <img src="../../src/assets/images/image1.png" alt="" />
                     <div>
                         <h3>Hi, Kosta Arsic</h3>
-                        <NavLink className="btn">View Public Profile</NavLink>
+                        <ButtonBorder value={"View Public Profile"} />
+                        {/* <NavLink className="btn">View Public Profile</NavLink> */}
                     </div>
                 </div>
                 <div className="profile__info">
                     <ul>
-                        {listContent.map((list, id) => (
-                            <CustomLink
-                                to={"/account/profile" + list.route}
-                                key={id}
-                            >
-                                <List
-                                    className={list.selected ? "selected" : ""}
-                                    list={list}
-                                />
-                            </CustomLink>
-                        ))}
+                        {listContent
+                            .filter((list) => list.component !== "SavedItems")
+                            .map((list, id) => (
+                                <CustomLink
+                                    to={"/account/profile" + list.route}
+                                    key={id}
+                                >
+                                    <List
+                                        className={
+                                            list.selected ? "selected" : ""
+                                        }
+                                        list={list}
+                                    />
+                                </CustomLink>
+                            ))}
                     </ul>
                 </div>
             </div>
@@ -45,15 +51,14 @@ const MyProfile = ({ listContent, staticList }) => {
 
 const CustomLink = styled(NavLink)`
     text-decoration: none;
-    color: black;
+    color: var(--main-color);
 `;
 
 const Container = styled.div`
     border-radius: 5px;
     width: 100%;
     background-color: #fffdfb;
-    margin-top: 20px;
-    padding: 60px 0;
+    padding: 50px 0;
     display: flex;
 
     .components {
@@ -67,36 +72,18 @@ const Container = styled.div`
 
     .profile__greet {
         display: flex;
-        justify-content: flex-start;
-        margin-bottom: 20px;
+        align-items: flex-start;
+        margin-bottom: 25px;
 
         img {
-            margin: 12px;
+            margin-right: 12px;
             width: 60px;
             height: 60px;
             pointer-events: none;
         }
 
         h3 {
-            margin: 10px 0;
             word-break: break-all;
-        }
-
-        .btn {
-            color: black;
-            text-decoration: none;
-            padding: 0.4rem 0.9rem;
-            outline: 2px solid #ce4620;
-            font-weight: bold;
-            border-radius: 5px;
-            display: block;
-            text-align: center;
-            font-size: 14px;
-
-            &:hover {
-                background-color: #ce4620;
-                color: white;
-            }
         }
 
         svg {

@@ -13,5 +13,6 @@ router.get("/recipe/:id", recipesController.getInfo);
 router.post("/recipe/:id", recipesController.createInfo);
 router.get("/favorites", recipesController.getFavorite);
 router.post("/favorites", recipesController.createFavorite);
+router.delete("/favorites", recipesController.deleteFavorite);
 
 module.exports = router;

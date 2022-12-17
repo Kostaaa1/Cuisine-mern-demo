@@ -12,8 +12,15 @@ import {
 
 const CardDescription = ({ data }) => {
     const [favorite, setFavorite] = useState(false);
+    const [recipeTitle, setRecipeTitle] = useState("");
+    const [recipe, setRecipe] = useState();
 
     useEffect(() => {
+        setRecipeTitle(data.title);
+        const newObj = { ...data };
+        delete newObj.title;
+
+        setRecipe(newObj);
         setFavorite(false);
     }, []);
 
@@ -26,8 +33,8 @@ const CardDescription = ({ data }) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: data.title,
-                recipe: data,
+                name: recipeTitle,
+                recipe: recipe,
             }),
         });
     };

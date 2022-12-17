@@ -61,8 +61,8 @@ const PersonalInfo = () => {
                     Only you can see the information on this page. It will not
                     be displayed for other users to see.
                 </span>
-                <div className="line__break"></div>
             </div>
+            <div className="line__break"></div>
             <DynamicForm>
                 <div
                     className="head__info"

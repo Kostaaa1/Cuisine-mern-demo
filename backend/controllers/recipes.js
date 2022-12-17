@@ -102,11 +102,21 @@ module.exports = {
     },
     createFavorite: async (req, res) => {
         try {
-            const favoriteCreate = await FavoritesRecipe.create({
+            const favorite = await FavoritesRecipe.create({
                 name: req.body.name,
                 data: req.body.recipe,
             });
-            res.json(favoriteCreate);
+            res.json(favorite);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    deleteFavorite: async (req, res) => {
+        try {
+            const deleteFav = await FavoritesRecipe.findByIdAndDelete({
+                _id: req.body.id,
+            });
+            res.json(deleteFav);
         } catch (error) {
             console.log(error);
         }

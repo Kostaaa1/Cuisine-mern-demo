@@ -1,90 +1,107 @@
-import { Lock } from "@material-ui/icons";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { SupervisorAccount } from "@material-ui/icons";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import CollectionCard from "./CollectionCard";
 import Button from "../../../../common/Button";
-import FavoriteCollection from "./FavoriteCollection";
-import NewCollectionModal from "./NewCollectionModal";
+import {
+    fetchSavedRecipes,
+    fetchFavoriteRecipesLength,
+} from "../../hooks/get-favorites";
+import Return from "../../../../common/Return";
+import { useNavigate } from "react-router-dom";
+import SectionInfo from "../../../../common/SectionInfo";
 
 const SavedItems = () => {
-    const [showCollectionModal, setShowCollectionModal] = useState(false);
+    const navigate = useNavigate();
+
+    const { isLoading, data, isSuccess } = useQuery(
+        ["favorite"],
+        fetchSavedRecipes
+    );
+
+    const { data: length } = useQuery(
+        ["favoriteLength"],
+        fetchFavoriteRecipesLength
+    );
+
+    const returnBack = () => {
+        navigate("/account/profile/collections");
+    };
 
     return (
-        <Collections>
-            <div className="saved__items">
-                <div className="public__section">
-                    <h1>Saved Items & Collections</h1>
-                    <Button
-                        onClick={() => setShowCollectionModal(true)}
-                        value={"NEW COLLECTION +"}
-                    />
-                </div>
-                <div className="section__info">
-                    <h3>Create collections to organize your saved items</h3>
-                    <span>
-                        <Lock />
-                        Others can see your saved items and any collection you
-                        make public.
-                    </span>
-                    <div className="line__break"></div>
-                </div>
-                <div>
-                    <h3>Collections</h3>
-                    <div className="collection__control">
-                        <FavoriteCollection />
-                    </div>
-                </div>
+        <Saved>
+            <Return value={"BACK TO ALL"} onClick={() => returnBack()} />
+            <div className="section__info">
+                <h1>All Saved Items</h1>
+                <h3>All your favorite content in one place!</h3>
+                <span>
+                    <SupervisorAccount /> Other users see what you save
+                </span>
             </div>
-            {showCollectionModal && (
-                <NewCollectionModal
-                    showModal={() =>
-                        setShowCollectionModal(!showCollectionModal)
-                    }
-                />
+
+            <div className="line__break"></div>
+            {length === 0 && (
+                <section>
+                    <h2>You haven't saved anything yet. Start browsing!</h2>
+                    <p>
+                        You can save items to your profile by clicking the heart
+                        icon in the share bar.
+                    </p>
+                    <Button value={"BACK HOME"} onClick={returnBack} />
+                </section>
             )}
-        </Collections>
+            {length > 0 && <h3 className="length">{length} items</h3>}
+
+            <div className="collection__control">
+                {isSuccess &&
+                    data.map((favorite) => (
+                        <CollectionCard
+                            key={favorite._id}
+                            id={favorite._id}
+                            favorite={favorite.data}
+                            name={favorite.name}
+                        />
+                    ))}
+            </div>
+        </Saved>
     );
 };
 
-const Collections = styled.div`
-    width: 100%;
-    padding: 20px;
-
-    .saved__items {
-        h3 {
-            margin-bottom: 20px;
-        }
-
-        .collection__control {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            row-gap: 25px;
-        }
+const Saved = styled.div`
+    position: relative;
+    h3 {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+        margin: 20px;
     }
 
-    .public__section {
+    section {
         display: flex;
-        justify-content: space-between;
+        width: 100%;
         align-items: center;
-        margin-bottom: 20px;
+        justify-content: center;
+        flex-direction: column;
 
-        h1 {
-            font-weight: bold;
-            font-size: 2.4rem;
+        h2 {
+            color: var(--grey-color);
+        }
+
+        p {
+            margin: 20px 0 30px 0;
         }
     }
 
     .section__info {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
+        height: 200px;
 
-        h3 {
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 25px;
-            margin-bottom: 14px;
+        h1 {
+            margin-top: 50px;
         }
 
         span {
@@ -99,11 +116,25 @@ const Collections = styled.div`
         }
     }
 
+    .length {
+        font-weight: 500;
+        margin: 20px 0;
+        padding: 5px 10px;
+    }
+
     .line__break {
         width: 100%;
         height: 1px;
-        margin: 40px 0;
+        margin: 25px 0 55px 0;
         background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .collection__control {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        row-gap: 25px;
+        padding: 5px 20px;
     }
 `;
 
