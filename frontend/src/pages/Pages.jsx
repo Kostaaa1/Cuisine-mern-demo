@@ -115,12 +115,10 @@ const Pages = () => {
                 <Route
                     path="/account/profile"
                     element={
-                        <div>
-                            <MyProfile
-                                listContent={lists}
-                                staticList={StaticList}
-                            />
-                        </div>
+                        <MyProfile
+                            listContent={lists}
+                            staticList={StaticList}
+                        />
                     }
                 />
                 <Route
@@ -138,7 +136,7 @@ const Pages = () => {
 };
 
 const Wrapper = styled.div`
-    width: 1300px;
+    width: 1250px;
     margin: 0 auto;
     min-height: 100vh;
 `;

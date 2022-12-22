@@ -4,11 +4,10 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import ButtonBorder from "../../../../common/ButtonBorder";
 import RemoveModal from "./RemoveModal";
-import Loading from "../../../../common/Loading";
 
-const CollectionCard = ({ favorite, addId }) => {
+const CollectionCard = ({ favorite, transparent, removeId }) => {
     const [showRemoveModal, setShowRemoveModal] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [transparentCard, setTransparentCard] = useState(false);
 
     const deleteFavorite = async () => {
         // await fetch("/api/favorites", {
@@ -30,43 +29,22 @@ const CollectionCard = ({ favorite, addId }) => {
 
     return (
         <Card>
-            {loading && (
-                <>
-                    <div className="transparent"></div>
-                    <Loading margin={"0 0 110px 0"} />
-                </>
-            )}
-            <img src={favorite.data.image} alt="" />
-            <div className="card__desc">
-                <h4>{favorite.name}</h4>
-                <ButtonBorder
-                    value={
-                        <span>
-                            <Add /> Add to collection
-                        </span>
-                    }
-                />
-            </div>
-            {!loading && (
-                <Delete onClick={() => setShowRemoveModal(true)}>
-                    <Remove />
-                </Delete>
-            )}
-            {showRemoveModal && (
-                <RemoveModal
-                    remove={() => {
-                        setLoading(true);
-                        setShowRemoveModal(false);
-
-                        setTimeout(() => {
-                            setLoading(false);
-                            addId(favorite._id);
-                        }, Math.random() * 1200);
-                    }}
-                    name={favorite.name}
-                    onClick={() => closeModal()}
-                />
-            )}
+            <>
+                <img src={favorite.data.image} alt="" />
+                <div className="card__desc">
+                    <h4>{favorite.name}</h4>
+                    <ButtonBorder
+                        value={
+                            <span>
+                                <Add /> Add to collection
+                            </span>
+                        }
+                    />
+                </div>
+                <div className="transparent">
+                    <button onClick={() => removeId(favorite._id)}>Undo</button>
+                </div>
+            </>
         </Card>
     );
 };
@@ -92,12 +70,11 @@ const Card = styled.div`
         justify-content: center;
 
         button {
-            /* margin-bottom: 1200px; */
+            margin-bottom: 120px;
             color: var(--main-color);
             text-decoration: none;
             padding: 0.4rem 0.9rem;
             border: none;
-            /* padding: 16px 35px; */
             outline: 1px solid #ce4620;
             font-weight: bold;
             border-radius: 3px;
@@ -157,23 +134,4 @@ const Card = styled.div`
     }
 `;
 
-const Delete = styled.div`
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #fff;
-    right: -10px;
-    top: -10px;
-    border: 1px solid var(--red-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-
-    svg {
-        color: var(--red-color);
-    }
-`;
 export default CollectionCard;

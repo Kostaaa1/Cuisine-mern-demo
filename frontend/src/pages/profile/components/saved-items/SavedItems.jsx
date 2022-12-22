@@ -1,69 +1,99 @@
 import styled from "styled-components";
 import { SupervisorAccount } from "@material-ui/icons";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import CollectionCard from "./CollectionCard";
+import TransparentCard from "./TransparentCard";
 import Button from "../../../../common/Button";
-import {
-    fetchSavedRecipes,
-    fetchFavoriteRecipesLength,
-} from "../../hooks/get-favorites";
 import Return from "../../../../common/Return";
 import { useNavigate } from "react-router-dom";
-import SectionInfo from "../../../../common/SectionInfo";
+import IndexesContext from "../../../../setup/app-context-menager/IndexesContext";
+import { useFavorites } from "../../hooks/useFavorites";
+import Loading from "../../../../common/Loading";
 
 const SavedItems = () => {
     const navigate = useNavigate();
+    const {
+        data,
+        isLoading,
+        isSuccess,
+        refetchOnLoad,
+        length,
+        isFetched,
+        isFetching,
+    } = useFavorites();
 
-    const { isLoading, data, isSuccess } = useQuery(
-        ["favorite"],
-        fetchSavedRecipes
-    );
+    const { arrayId, setArrayId } = useContext(IndexesContext);
 
-    const { data: length } = useQuery(
-        ["favoriteLength"],
-        fetchFavoriteRecipesLength
-    );
-
-    const returnBack = () => {
-        navigate("/account/profile/collections");
+    const addId = async (id) => {
+        const arr = [...arrayId, id];
+        setArrayId(arr);
     };
+
+    const removeId = async (id) => {
+        const arr = arrayId.filter((recipeId) => recipeId !== id);
+        setArrayId(arr);
+    };
+
+    refetchOnLoad();
 
     return (
         <Saved>
-            <Return value={"BACK TO ALL"} onClick={() => returnBack()} />
-            <div className="section__info">
-                <h1>All Saved Items</h1>
-                <h3>All your favorite content in one place!</h3>
-                <span>
-                    <SupervisorAccount /> Other users see what you save
-                </span>
-            </div>
+            <Return
+                value={"BACK TO ALL"}
+                onClick={() => navigate("/account/profile/collections")}
+            />
+            {isFetching ? (
+                <Loading margin={"110px 0 0 0"} />
+            ) : (
+                <>
+                    <div className="section-info">
+                        <h1>All Saved Items</h1>
+                        <h3>All your favorite content in one place!</h3>
+                        <span>
+                            <SupervisorAccount /> Other users see what you save
+                        </span>
+                    </div>
+                    <div className="line-break"></div>
 
-            <div className="line__break"></div>
-            {length === 0 && (
-                <section>
-                    <h2>You haven't saved anything yet. Start browsing!</h2>
-                    <p>
-                        You can save items to your profile by clicking the heart
-                        icon in the share bar.
-                    </p>
-                    <Button value={"BACK HOME"} onClick={returnBack} />
-                </section>
+                    {length === 0 && (
+                        <section>
+                            <h2>
+                                You haven't saved anything yet. Start browsing!
+                            </h2>
+                            <p>
+                                You can save items to your profile by clicking
+                                the heart icon in the share bar.
+                            </p>
+                            <Button
+                                value={"BACK HOME"}
+                                onClick={() =>
+                                    navigate("/account/profile/collections")
+                                }
+                            />
+                        </section>
+                    )}
+                    {length > 0 && <h3 className="length">{length} items</h3>}
+                    <div className="collection-control">
+                        {isSuccess &&
+                            data.map((favorite, id) =>
+                                arrayId.includes(favorite._id) ? (
+                                    <TransparentCard
+                                        key={favorite._id}
+                                        favorite={favorite}
+                                        removeId={removeId}
+                                    />
+                                ) : (
+                                    <CollectionCard
+                                        key={favorite._id}
+                                        favorite={favorite}
+                                        addId={addId}
+                                    />
+                                )
+                            )}
+                    </div>
+                </>
             )}
-            {length > 0 && <h3 className="length">{length} items</h3>}
-
-            <div className="collection__control">
-                {isSuccess &&
-                    data.map((favorite) => (
-                        <CollectionCard
-                            key={favorite._id}
-                            id={favorite._id}
-                            favorite={favorite.data}
-                            name={favorite.name}
-                        />
-                    ))}
-            </div>
         </Saved>
     );
 };
@@ -93,7 +123,7 @@ const Saved = styled.div`
         }
     }
 
-    .section__info {
+    .section-info {
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -122,18 +152,18 @@ const Saved = styled.div`
         padding: 5px 10px;
     }
 
-    .line__break {
+    .line-break {
         width: 100%;
         height: 1px;
-        margin: 25px 0 55px 0;
+        margin: 25px 0 30px 0;
         background-color: rgba(0, 0, 0, 0.2);
     }
 
-    .collection__control {
+    .collection-control {
         display: flex;
         flex-wrap: wrap;
-        gap: 18px;
-        row-gap: 25px;
+        gap: 35px;
+        row-gap: 40px;
         padding: 5px 20px;
     }
 `;

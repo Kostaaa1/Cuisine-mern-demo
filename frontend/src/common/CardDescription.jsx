@@ -67,7 +67,7 @@ const CardDescription = ({ data }) => {
 
 const Card = styled.div`
     background-color: white;
-    border-radius: 8px;
+    border-radius: 4px;
     height: 100%;
     position: relative;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);

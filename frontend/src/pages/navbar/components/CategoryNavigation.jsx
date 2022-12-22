@@ -76,8 +76,7 @@ const Category = () => {
                                 key={id}
                                 onClick={() => categoryNavigation(data.query)}
                             >
-                                {" "}
-                                {data.list}{" "}
+                                {data.list}
                             </li>
                         ))}
                     </CategoryDropdown>
@@ -124,7 +123,7 @@ const CategoryDropdown = styled.ul`
     top: 75%;
     left: 0;
     transform: translate(-5%);
-    max-height: 260px;
+    min-height: 100%;
     width: 180px;
     border: 1px solid rgba(0, 0, 0, 0.14);
     background-color: white;
@@ -136,7 +135,6 @@ const CategoryDropdown = styled.ul`
     z-index: 10;
 
     li {
-        margin: 12px 2px;
         padding: 0 6px;
         font-size: 16px;
         color: var(--main-color);

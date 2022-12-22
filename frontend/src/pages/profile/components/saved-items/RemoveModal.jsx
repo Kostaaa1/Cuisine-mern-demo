@@ -2,8 +2,18 @@ import styled from "styled-components";
 import { Close, Lock } from "@material-ui/icons";
 import { motion } from "framer-motion";
 import Button from "../../../../common/Button";
+import { useEffect } from "react";
 
 const RemoveModal = ({ name, onClick, remove }) => {
+    const handle = (e) => {
+        if (e.key !== "Escape") return;
+        onClick();
+    };
+
+    useEffect(() => {
+        document.addEventListener("keydown", handle);
+    }, []);
+
     return (
         <Modal
             animate={{ opacity: 1 }}
@@ -54,7 +64,6 @@ const Section = styled.div`
     min-height: 260px;
 
     .favorite__header {
-        padding: 0 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -63,8 +72,13 @@ const Section = styled.div`
         color: white;
         background-color: #ce4620;
 
+        h3 {
+            font-weight: bold;
+        }
+
         svg {
             cursor: pointer;
+            margin-right: 10px;
         }
     }
 
@@ -74,7 +88,7 @@ const Section = styled.div`
         p {
             margin: 25px 0;
             line-height: 1.6rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
         }
 
         p > span {

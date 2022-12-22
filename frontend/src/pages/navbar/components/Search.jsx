@@ -13,12 +13,13 @@ const Search = ({ showSearched }) => {
         navigate("/searched/" + input.toLowerCase());
 
         setInput("");
+        showSearched();
     };
 
     return (
         <SearchForm onSubmit={submitHandler}>
             <h4>Search</h4>
-            <div className="wrapper">
+            <Wrapper className="wrapper">
                 <input
                     onChange={(e) => setInput(e.target.value)}
                     type="text"
@@ -27,7 +28,7 @@ const Search = ({ showSearched }) => {
                 />
                 <FaSearch className="search" onClick={submitHandler} />
                 <Close className="close" onClick={showSearched} />
-            </div>
+            </Wrapper>
         </SearchForm>
     );
 };
@@ -38,49 +39,53 @@ const SearchForm = styled.form`
     justify-content: space-around;
     width: 480px;
     height: 50px;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 12px;
 
     h4 {
         color: var(--main-color);
-        font-weight: 500;
+        font-weight: bold;
         margin-right: 20px;
     }
 
     .wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    }
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    input {
         width: 100%;
-        height: 100%;
-        position: relative;
+        height: 80%;
+        border: 1px solid var(--main-color);
+        border-right: none;
+        padding: 0 14px;
+        font-size: 1rem;
 
-        input {
-            width: 100%;
-            height: 80%;
-            border: 1px solid var(--main-color);
-            border-right: none;
-            padding: 0 14px;
-            font-size: 1rem;
+        &:focus {
+            outline: none;
+        }
+    }
 
-            &:focus {
-                outline: none;
-            }
-        }
-        .search {
-            height: 80%;
-            width: 40px;
-            padding: 12px;
-            color: white;
-            cursor: pointer;
-            background-color: var(--red-color);
-        }
+    .search {
+        height: 80%;
+        width: 40px;
+        padding: 12px;
+        color: white;
+        cursor: pointer;
+        background-color: var(--red-color);
+    }
 
-        .close {
-            color: var(--main-color);
-            font-size: 2.2rem;
-            cursor: pointer;
-            margin-left: 5px;
-        }
+    .close {
+        color: var(--main-color);
+        font-size: 2.2rem;
+        cursor: pointer;
+        margin-left: 5px;
     }
 `;
 

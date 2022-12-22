@@ -1,13 +1,29 @@
 import styled from "styled-components";
-const Loading = () => {
-    return <LoadingCircle></LoadingCircle>;
+const Loading = ({ margin }) => {
+    return (
+        <Wrapper>
+            <LoadingCircle style={{ margin: margin }}></LoadingCircle>
+        </Wrapper>
+    );
 };
+
+const Wrapper = styled.div`
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 
 const LoadingCircle = styled.div`
     pointer-events: none;
-    width: 2em;
-    height: 2em;
-    border: 0.15em solid transparent;
+    width: 3em;
+    height: 3em;
+    border: 0.25em solid white;
     border-top-color: #ce4620;
     border-radius: 50%;
     animation: spin 1.5s linear infinite;

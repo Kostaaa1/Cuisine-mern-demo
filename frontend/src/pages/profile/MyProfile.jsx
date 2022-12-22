@@ -1,23 +1,43 @@
 import styled from "styled-components";
-import { NavLink, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useEffect, useContext } from "react";
 import List from "../../pages/profile/components/List";
 import ButtonBorder from "../../common/ButtonBorder";
-// import Img from '../../assets/images/image1.png'
+import IndexesContext from "../../setup/app-context-menager/IndexesContext";
 
 const MyProfile = ({ listContent, staticList }) => {
+    const { arrayId, setArrayId } = useContext(IndexesContext);
+
+    useEffect(() => {
+        if (arrayId.length !== 0) {
+            handleDeletionOfIndexes();
+            setArrayId([]);
+        }
+    }, [location.pathname !== "/account/profile/saved-items"]);
+
+    const handleDeletionOfIndexes = async () => {
+        await fetch("/api/favorites", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                ids: arrayId,
+            }),
+        });
+    };
+
     return (
         <Container>
             <div className="profile">
-                <div className="profile__greet">
+                <div className="profile-greet">
                     <img src="../../src/assets/images/image1.png" alt="" />
                     <div>
                         <h3>Hi, Kosta Arsic</h3>
                         <ButtonBorder value={"View Public Profile"} />
-                        {/* <NavLink className="btn">View Public Profile</NavLink> */}
                     </div>
                 </div>
-                <div className="profile__info">
+                <div className="profile-info">
                     <ul>
                         {listContent
                             .filter((list) => list.component !== "SavedItems")
@@ -70,7 +90,7 @@ const Container = styled.div`
         margin-right: 20px;
     }
 
-    .profile__greet {
+    .profile-greet {
         display: flex;
         align-items: flex-start;
         margin-bottom: 25px;
@@ -93,7 +113,7 @@ const Container = styled.div`
         }
     }
 
-    .profile__info {
+    .profile-info {
         ul {
             display: flex;
             justify-content: center;

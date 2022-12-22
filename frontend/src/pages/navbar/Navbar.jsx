@@ -1,5 +1,5 @@
 import { GiKnifeFork } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Search from "./components/Search";
 import Category from "./components/CategoryNavigation";
@@ -11,20 +11,17 @@ import { motion } from "framer-motion";
 
 const Navbar = () => {
     const [searchClick, setSearchedClick] = useState(false);
+    const navigate = useNavigate();
 
     const showSearched = () => {
         setSearchedClick(!searchClick);
-    };
-
-    const reload = () => {
-        window.location.href = window.location.origin;
     };
 
     return (
         <Header>
             <Nav>
                 <Control>
-                    <Logo onClick={reload}>
+                    <Logo to={"/"}>
                         Culinaryyy
                         <GiKnifeFork className="logo" />
                     </Logo>
@@ -94,7 +91,7 @@ const Control = styled.div`
 const Nav = styled.nav`
     display: flex;
     flex-direction: column;
-    width: 1300px;
+    width: 1250px;
     margin: 0 auto;
     margin-bottom: 10px;
 
@@ -157,17 +154,18 @@ const Nav = styled.nav`
 
 const Logo = styled(Link)`
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 600;
     font-family: "Lobster two", cursive;
     color: var(--main-color);
     font-style: italic;
     display: flex;
     justify-content: center;
+    align-items: center;
 
     .logo {
-        font-size: 1.8rem;
-        color: var(--main-color);
+        color: #f7af30;
+        /* color: var(--main-color); */
         margin-left: 4px;
     }
 `;

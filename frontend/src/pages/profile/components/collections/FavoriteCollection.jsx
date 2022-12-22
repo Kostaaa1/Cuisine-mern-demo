@@ -1,62 +1,27 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AppsOutlined, VideocamOff } from "@material-ui/icons";
-import {
-    fetchFavoriteRecipes,
-    fetchFavoriteRecipesLength,
-} from "../../hooks/get-favorites";
+import { useLayoutData } from "../../hooks/useLayoutData";
 
 const FavoriteCollection = () => {
-    const [mockData, setMockData] = useState([
-        {
-            data: {
-                image: "/src/assets/images/gray-background.jpg",
-            },
-        },
-        {
-            data: {
-                image: "/src/assets/images/gray-background.jpg",
-            },
-        },
-        {
-            data: {
-                image: "/src/assets/images/gray-background.jpg",
-            },
-        },
-        {
-            data: {
-                image: "/src/assets/images/gray-background.jpg",
-            },
-        },
-    ]);
-
-    const { isLoading, data, isSuccess } = useQuery(["collection"], () =>
-        fetchFavoriteRecipes(mockData)
-    );
-
-    const { data: collectionLength } = useQuery(
-        ["collectionLength"],
-        fetchFavoriteRecipesLength
-    );
+    const { arr, length, isSuccess, isLoading } = useLayoutData();
 
     return (
         <Collection>
             {isSuccess && (
                 <CustomLink to={"/account/profile/saved-items"}>
-                    <div className="collection__layout">
-                        {data.map((recipe, id) => (
+                    <div className="collection-layout">
+                        {arr.map((recipe, id) => (
                             <img key={id} src={recipe.data.image} alt="" />
                         ))}
                     </div>
                     {isLoading && <h4>Loading...</h4>}
-                    <div className="collection__description">
+                    <div className="collection-description">
                         <p>PUBLIC</p>
                         <h3>All Saved Items</h3>
                         <span>
-                            <AppsOutlined /> Collection // {collectionLength}
+                            <AppsOutlined /> Collection // {length}
                         </span>
                     </div>
                 </CustomLink>
@@ -77,7 +42,7 @@ const Collection = styled.div`
     font-size: 14px;
     border: 1px solid rgba(0, 0, 0, 0.2);
 
-    .collection__description {
+    .collection-description {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -98,7 +63,7 @@ const Collection = styled.div`
                 text-decoration: underline;
                 text-decoration-color: #ce4620;
                 text-underline-offset: 5px;
-                text-decoration-thickness: 10%;
+                text-decoration-thickness: 20%;
             }
         }
 
@@ -116,7 +81,7 @@ const Collection = styled.div`
         }
     }
 
-    .collection__layout {
+    .collection-layout {
         display: grid;
         grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
         gap: 4px;

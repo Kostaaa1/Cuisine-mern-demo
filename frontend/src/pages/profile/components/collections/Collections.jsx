@@ -6,14 +6,16 @@ import SectionInfo from "../../../../common/SectionInfo";
 import FavoriteCollection from "./FavoriteCollection";
 import NewCollectionModal from "./NewCollectionModal";
 import NewCollectionCard from "./NewCollectionCard";
+import { useFavorites } from "../../hooks/useFavorites";
+import Loading from "../../../../common/Loading";
 
 const SavedItems = () => {
     const [showCollectionModal, setShowCollectionModal] = useState(false);
 
     return (
         <Collections>
-            <div className="saved__items">
-                <div className="public__section">
+            <div className="saved-items">
+                <div className="public-section">
                     <h1>Saved Items & Collections</h1>
                     <Button
                         onClick={() => setShowCollectionModal(true)}
@@ -27,10 +29,10 @@ const SavedItems = () => {
                         "Others can see your saved items and any collection you make public."
                     }
                 />
-                <div className="line__break"></div>
+                <div className="line-break"></div>
                 <div>
                     <h3>Collections</h3>
-                    <div className="collection__control">
+                    <div className="collection-control">
                         <FavoriteCollection />
                         <NewCollectionCard
                             onClick={() => setShowCollectionModal(true)}
@@ -53,12 +55,12 @@ const Collections = styled.div`
     width: 100%;
     padding: 20px;
 
-    .saved__items {
+    .saved-items {
         h3 {
             margin-bottom: 20px;
         }
 
-        .collection__control {
+        .collection-control {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
@@ -66,7 +68,7 @@ const Collections = styled.div`
         }
     }
 
-    .public__section {
+    .public-section {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -78,7 +80,7 @@ const Collections = styled.div`
         }
     }
 
-    .section__info {
+    .section-info {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -103,7 +105,7 @@ const Collections = styled.div`
         }
     }
 
-    .line__break {
+    .line-break {
         width: 100%;
         height: 1px;
         margin: 40px 0;
