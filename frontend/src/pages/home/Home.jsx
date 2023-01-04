@@ -12,7 +12,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
         >
             {/* <Hero /> */}
-            {/* <Popular /> */}
+            <Popular />
             {/* <Veggie /> */}
         </motion.div>
     );

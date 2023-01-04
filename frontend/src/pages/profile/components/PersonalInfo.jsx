@@ -1,7 +1,10 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { KeyboardArrowDown, Lock, SupervisorAccount } from "@material-ui/icons";
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Loading from "../../../common/Loading";
+import AuthContext from "../../../setup/app-context-menager/AuthContext";
 
 const PersonalInfo = () => {
     const [clicked, setClicked] = useState(true);

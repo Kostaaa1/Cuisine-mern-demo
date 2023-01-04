@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { AppsOutlined, VideocamOff } from "@material-ui/icons";
 import { useLayoutData } from "../../hooks/useLayoutData";
+import AuthContext from "../../../../setup/app-context-menager/AuthContext";
 
 const FavoriteCollection = () => {
     const { arr, length, isSuccess, isLoading } = useLayoutData();
+    const { currentUser, loading, validated, authenticated } =
+        useContext(AuthContext);
 
     return (
         <Collection>
-            {isSuccess && (
+            {currentUser && (
                 <CustomLink to={"/account/profile/saved-items"}>
                     <div className="collection-layout">
                         {arr.map((recipe, id) => (

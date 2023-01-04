@@ -19,7 +19,6 @@ const Searched = () => {
                 }&number=30&query=${params.search}`
             );
             const data = await res.json();
-            console.log(data);
 
             if (data.results.length === 0) return [];
 

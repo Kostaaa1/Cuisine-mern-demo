@@ -1,74 +1,69 @@
 const User = require("../models/User");
-const CryptoJS = require("crypto-js");
-const jwt = require("jsonwebtoken");
 
 module.exports = {
-    registerUser: async (req, res) => {
-        if (req.body.password.length < 8) {
-            res.status(401).json(
-                "Password length needs to be at least 8 characters long!"
-            );
-            return;
-        }
-
-        const user = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: CryptoJS.AES.encrypt(
-                req.body.password,
-                process.env.SECRET_KEY
-            ).toString(),
-        });
-
+    addUser: async (req, res) => {
         try {
-            const checkUserName = await User.findOne({
-                username: req.body.username,
-            });
-            if (checkUserName) {
-                res.status(401).json(
-                    `Username is not available! Try with different one!`
-                );
-                return;
-            }
-
-            const newUser = await user.save();
-            res.status(200).json(newUser);
+            const user = await User.create(req.body.user);
+            res.json(user);
         } catch (error) {
-            res.status(500).json(error);
+            console.log(error);
         }
     },
-    loginUser: async (req, res) => {
+    getUser: async (req, res) => {
         try {
-            const user = await User.findOne({ email: req.body.email });
-            if (!user) {
-                return res
-                    .status(401)
-                    .json(
-                        `The email you entered isn’t connected to an account! Create a new account.`
-                    );
-            }
-
-            const bytes = CryptoJS.AES.decrypt(
-                user.password,
-                process.env.SECRET_KEY
+            const user = await User.findOne({ email: req.params.email });
+            res.json(user);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    addToFavorite: async (req, res) => {
+        console.log(req.body);
+        try {
+            const user = await User.updateOne(
+                {
+                    email: req.params.email,
+                    "collections.collName": "All saved items",
+                },
+                {
+                    $push: {
+                        "collections.$.collRecipes": {
+                            recipeName: req.body.recipeName,
+                            recipeData: req.body.recipeData,
+                        },
+                    },
+                }
             );
-            const originaPassword = bytes.toString(CryptoJS.enc.Utf8);
 
-            if (originaPassword !== req.body.password) {
-                return res.status(401).json("Wrong password or username!");
-            }
-
-            const accessToken = jwt.sign(
-                { id: user._id },
-                process.env.SECRET_KEY,
-                { expiresIn: "5d" }
+            res.json(user);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    deleteFavorite: async (req, res) => {
+        try {
+            const user = await User.updateOne(
+                {
+                    email: req.params.email,
+                    "collections.collName": "All saved items",
+                },
+                // {
+                //     $pull: {
+                //         "collections.$.collRecipes": {
+                //             { _id: { $in: ids } }
+                //         },
+                //     },
+                // }
+                {
+                    $pull: {
+                        "collections.$.collRecipes": { _id: { $in: ids } },
+                    },
+                }
             );
 
-            const { password, ...info } = user._doc;
-
-            res.status(200).json({ ...info, accessToken });
+            res.json(user);
         } catch (error) {
-            res.status(500).json(error);
+            console.log(err);
         }
     },
 };

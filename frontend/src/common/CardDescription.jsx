@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import SavedModal from "./SavedModal";
@@ -9,11 +9,15 @@ import {
     FavoriteBorder,
     Favorite,
 } from "@material-ui/icons";
+import AuthContext from "../setup/app-context-menager/AuthContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CardDescription = ({ data }) => {
     const [favorite, setFavorite] = useState(false);
     const [recipeTitle, setRecipeTitle] = useState("");
     const [recipe, setRecipe] = useState();
+    const { currentUser } = useContext(AuthContext);
+    const { user } = useAuth0();
 
     useEffect(() => {
         setRecipeTitle(data.title);
@@ -27,14 +31,14 @@ const CardDescription = ({ data }) => {
     const addRecipeToFavorites = () => {
         setFavorite(true);
 
-        fetch("/api/favorites", {
-            method: "POST",
+        fetch(`/api/auth/${user.email}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: recipeTitle,
-                recipe: recipe,
+                recipeName: recipeTitle,
+                recipeData: recipe,
             }),
         });
     };

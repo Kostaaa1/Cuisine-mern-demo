@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { SupervisorAccount } from "@material-ui/icons";
-import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import CollectionCard from "./CollectionCard";
 import TransparentCard from "./TransparentCard";
@@ -76,16 +75,16 @@ const SavedItems = () => {
                     {length > 0 && <h3 className="length">{length} items</h3>}
                     <div className="collection-control">
                         {isSuccess &&
-                            data.map((favorite, id) =>
+                            data?.map((favorite, id) =>
                                 arrayId.includes(favorite._id) ? (
                                     <TransparentCard
-                                        key={favorite._id}
+                                        key={id}
                                         favorite={favorite}
                                         removeId={removeId}
                                     />
                                 ) : (
                                     <CollectionCard
-                                        key={favorite._id}
+                                        key={id}
                                         favorite={favorite}
                                         addId={addId}
                                     />

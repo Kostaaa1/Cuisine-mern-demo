@@ -1,12 +1,21 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useContext, useState } from "react";
 import List from "../../pages/profile/components/List";
 import ButtonBorder from "../../common/ButtonBorder";
 import IndexesContext from "../../setup/app-context-menager/IndexesContext";
+import AuthContext from "../../setup/app-context-menager/AuthContext";
+import { motion } from "framer-motion";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 const MyProfile = ({ listContent, staticList }) => {
     const { arrayId, setArrayId } = useContext(IndexesContext);
+    const { isLoading, isAuthenticated, getAccessTokenSilently, user } =
+        useAuth0();
+    const { currentUser, loading, validated, authenticated } =
+        useContext(AuthContext);
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         if (arrayId.length !== 0) {
@@ -16,27 +25,48 @@ const MyProfile = ({ listContent, staticList }) => {
     }, [location.pathname !== "/account/profile/saved-items"]);
 
     const handleDeletionOfIndexes = async () => {
-        await fetch("/api/favorites", {
-            method: "DELETE",
+        await fetch(`/api/auth/${user?.email}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 ids: arrayId,
+                email: user?.email,
             }),
         });
+    };
+
+    const userData = async () => {
+        try {
+            if (user) {
+                const res = await axios.get(`/api/auth/${user.email}`, {
+                    method: "GET",
+                    headers: {
+                        autorization: `Bearer ${getAccessTokenSilently()}`,
+                    },
+                });
+                setData(res.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
         <Container>
             <div className="profile">
-                <div className="profile-greet">
-                    <img src="../../src/assets/images/image1.png" alt="" />
-                    <div>
-                        <h3>Hi, Kosta Arsic</h3>
-                        <ButtonBorder value={"View Public Profile"} />
+                {isLoading ? (
+                    <h4>Loading...</h4>
+                ) : (
+                    <div className="profile-greet">
+                        <img src="../../src/assets/images/image1.png" alt="" />
+                        <div>
+                            <h3>Hi, {currentUser?.email} </h3>
+                            <ButtonBorder value={"View Public Profile"} />
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className="profile-info">
                     <ul>
                         {listContent
@@ -66,6 +96,7 @@ const MyProfile = ({ listContent, staticList }) => {
                 })}
             </div>
         </Container>
+        // </motion.div>
     );
 };
 
@@ -74,7 +105,7 @@ const CustomLink = styled(NavLink)`
     color: var(--main-color);
 `;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
     border-radius: 5px;
     width: 100%;
     background-color: #fffdfb;
@@ -88,12 +119,19 @@ const Container = styled.div`
     .profile {
         width: 25%;
         margin-right: 20px;
+
+        h4 {
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 20px;
+        }
     }
 
     .profile-greet {
         display: flex;
         align-items: flex-start;
         margin-bottom: 25px;
+        padding: 0 10px;
 
         img {
             margin-right: 12px;

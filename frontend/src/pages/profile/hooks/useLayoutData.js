@@ -26,7 +26,13 @@ export const useLayoutData = () => {
     ]);
 
     const { data, length, isLoading, isSuccess } = useFavorites();
-    const arr = mockData.map((fav, i) => (data?.[i] ? data[i] : fav));
+    const destructuredArray = data?.map((x) => ({
+        data: { image: x.recipeData?.image },
+    }));
+
+    const arr = mockData.map((fav, i) =>
+        destructuredArray?.[i] ? destructuredArray[i] : fav
+    );
 
     return {
         arr,

@@ -3,16 +3,21 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Search from "./components/Search";
 import Category from "./components/CategoryNavigation";
-import { useState } from "react";
-import Dropdown from "./components/Dropdown";
 import { ArrowDropDown, AccountCircle } from "@material-ui/icons";
 import { FaUserCircle, FaSearch } from "react-icons/fa";
+import { useState, memo, useEffect, useContext } from "react";
+import { useAuth } from "../../setup/auth/useAuth";
+import { useAuth0 } from "@auth0/auth0-react";
+import AuthContext from "../../setup/app-context-menager/AuthContext";
+import Dropdown from "./components/Dropdown";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
+    const { user, loginWithPopup, isAuthenticated, logout, isLoading } =
+        useAuth0();
+    const { authenticated, userLogout } = useAuth();
+    const { currentUser, loading } = useContext(AuthContext);
     const [searchClick, setSearchedClick] = useState(false);
-    const navigate = useNavigate();
-
     const showSearched = () => {
         setSearchedClick(!searchClick);
     };
@@ -34,34 +39,59 @@ const Navbar = () => {
                                     onClick={showSearched}
                                 />
                             </li>
-                            <li className="dropdown list">
-                                <FaUserCircle className="user" /> My account
-                                <ArrowDropDown className="arrow" />
-                                <Links>
-                                    <ul className="user__links">
-                                        <NavLink to={"/account/profile"}>
-                                            <li>My Profile</li>
-                                        </NavLink>
-                                        <NavLink
-                                            to={"/account/profile/collections"}
-                                        >
-                                            <li>Saved Items & Collections</li>
-                                        </NavLink>
-                                        <NavLink to={"/account/addRecipe"}>
-                                            <li>Add a Recipe</li>
-                                        </NavLink>
+                            {authenticated ? (
+                                <>
+                                    <li className="dropdown list">
+                                        <img
+                                            src="https://st3.depositphotos.com/4326917/12573/v/450/depositphotos_125734036-stock-illustration-user-sign-illustration-white-icon.jpg"
+                                            alt=""
+                                            className="user"
+                                        />{" "}
+                                        My account
+                                        <ArrowDropDown className="arrow" />
+                                        <Links>
+                                            <ul className="user__links">
+                                                <NavLink
+                                                    to={"/account/profile"}
+                                                >
+                                                    <li>My Profile</li>
+                                                </NavLink>
+                                                <NavLink
+                                                    to={
+                                                        "/account/profile/collections"
+                                                    }
+                                                >
+                                                    <li>
+                                                        Saved Items &
+                                                        Collections
+                                                    </li>
+                                                </NavLink>
+                                                <NavLink
+                                                    to={"/account/addRecipe"}
+                                                >
+                                                    <li>Add a Recipe</li>
+                                                </NavLink>
 
-                                        <div className="line__break"></div>
+                                                <div className="line__break"></div>
 
-                                        <NavLink>
-                                            <li>Help</li>{" "}
-                                        </NavLink>
-                                        <NavLink>
-                                            <li>Log Out</li>{" "}
-                                        </NavLink>
-                                    </ul>
-                                </Links>
-                            </li>
+                                                <NavLink>
+                                                    <li>Help</li>{" "}
+                                                </NavLink>
+                                                <li onClick={userLogout}>
+                                                    Log Out
+                                                </li>
+                                            </ul>
+                                        </Links>
+                                    </li>
+                                </>
+                            ) : (
+                                <li
+                                    className="underline list"
+                                    onClick={loginWithPopup}
+                                >
+                                    <FaUserCircle className="user" /> Log in
+                                </li>
+                            )}
                             <li className="underline list">About Us</li>
                             <li className="underline list">Contact</li>
                             <li className="underline">Newsletter</li>
@@ -149,6 +179,13 @@ const Nav = styled.nav`
         &:hover > div {
             visibility: visible;
         }
+
+        div {
+            &:focus {
+                visibility: hidden;
+                border: 20px solid yellow;
+            }
+        }
     }
 `;
 
@@ -164,6 +201,7 @@ const Logo = styled(Link)`
     align-items: center;
 
     .logo {
+        font-size: 2.2rem;
         color: #f7af30;
         /* color: var(--main-color); */
         margin-left: 4px;
@@ -212,4 +250,4 @@ const NavLink = styled(Link)`
     }
 `;
 
-export default Navbar;
+export default memo(Navbar);

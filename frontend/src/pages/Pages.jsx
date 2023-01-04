@@ -12,16 +12,19 @@ import Collections from "./profile/components/collections/Collections";
 import SavedItems from "./profile/components/saved-items/SavedItems";
 import Category from "./category/Category";
 import Reviews from "./profile/components/Reviews";
+
 // import Category from "./common/Category";
 import { useEffect, useState } from "react";
 import {
     Route,
     Routes,
-    BrowserRouter,
     useLocation,
     useParams,
+    Navigate,
 } from "react-router-dom";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import ProtectedRoutes from "../setup/auth/ProtectedRoutes";
 
 const Pages = () => {
     const location = useLocation();
@@ -29,7 +32,7 @@ const Pages = () => {
         {
             id: 0,
             text: "Personal Info",
-            selected: true,
+            selected: false,
             component: "PersonalInfo",
             route: "",
         },
@@ -111,25 +114,26 @@ const Pages = () => {
                 <Route path="/category/:recipe" element={<Category />} />
                 <Route path="/recipe/:id" element={<Recipe />} />
                 <Route path="/account/addRecipe/" element={<AddRecipe />} />
-
-                <Route
-                    path="/account/profile"
-                    element={
-                        <MyProfile
-                            listContent={lists}
-                            staticList={StaticList}
-                        />
-                    }
-                />
-                <Route
-                    path="/account/profile/:name"
-                    element={
-                        <MyProfile
-                            listContent={lists}
-                            staticList={StaticList}
-                        />
-                    }
-                />
+                <Route element={<ProtectedRoutes />}>
+                    <Route
+                        path="/account/profile/"
+                        element={
+                            <MyProfile
+                                listContent={lists}
+                                staticList={StaticList}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/account/profile/:name"
+                        element={
+                            <MyProfile
+                                listContent={lists}
+                                staticList={StaticList}
+                            />
+                        }
+                    />
+                </Route>
             </Routes>
         </Wrapper>
     );

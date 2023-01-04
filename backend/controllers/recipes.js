@@ -114,10 +114,10 @@ module.exports = {
     deleteFavorite: async (req, res) => {
         try {
             const deleteFav = await FavoritesRecipe.deleteMany({
-                _id: { $in: req.body.ids },
+                name: { $in: req.body.ids },
             });
+
             res.json(deleteFav);
-            console.log(deleteFav);
         } catch (error) {
             console.log(error);
         }
