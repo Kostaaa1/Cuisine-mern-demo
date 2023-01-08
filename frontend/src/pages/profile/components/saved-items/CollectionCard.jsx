@@ -6,7 +6,7 @@ import ButtonBorder from "../../../../common/ButtonBorder";
 import RemoveModal from "./RemoveModal";
 import Loading from "../../../../common/Loading";
 
-const CollectionCard = ({ favorite, addId, id }) => {
+const CollectionCard = ({ favorite, addRecipeName }) => {
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -36,9 +36,9 @@ const CollectionCard = ({ favorite, addId, id }) => {
                     <Loading margin={"0 0 110px 0"} />
                 </>
             )}
-            <img src={favorite.recipeData?.image} alt="" />
+            <img src={favorite.recipe?.image} alt="" />
             <div className="card__desc">
-                <h4>{favorite.recipeName}</h4>
+                <h4>{favorite.recipeTitle}</h4>
                 <ButtonBorder
                     value={
                         <span>
@@ -60,10 +60,10 @@ const CollectionCard = ({ favorite, addId, id }) => {
 
                         setTimeout(() => {
                             setLoading(false);
-                            addId(favorite._id);
+                            addRecipeName(favorite?.recipeTitle);
                         }, Math.random() * 1200);
                     }}
-                    name={favorite.recipeName}
+                    // title={favorite.recipeTitle}
                     onClick={() => closeModal()}
                 />
             )}
@@ -119,7 +119,7 @@ const Card = styled.div`
     img {
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;
-        height: 270px;
+        /* height: 270px; */
     }
 
     .card__desc {

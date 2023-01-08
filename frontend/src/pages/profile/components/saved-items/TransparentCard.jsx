@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ButtonBorder from "../../../../common/ButtonBorder";
 import RemoveModal from "./RemoveModal";
 
-const CollectionCard = ({ favorite, removeId, id }) => {
+const CollectionCard = ({ favorite, removeRecipeName }) => {
     const [showRemoveModal, setShowRemoveModal] = useState(false);
     const [transparentCard, setTransparentCard] = useState(false);
 
@@ -30,9 +30,9 @@ const CollectionCard = ({ favorite, removeId, id }) => {
     return (
         <Card>
             <>
-                <img src={favorite.recipeData.image} alt="" />
+                <img src={favorite.recipe?.image} alt="" />
                 <div className="card__desc">
-                    <h4>{favorite.recipeName}</h4>
+                    <h4>{favorite?.recipeTitle}</h4>
                     <ButtonBorder
                         value={
                             <span>
@@ -42,7 +42,11 @@ const CollectionCard = ({ favorite, removeId, id }) => {
                     />
                 </div>
                 <div className="transparent">
-                    <button onClick={() => removeId(favorite._id)}>Undo</button>
+                    <button
+                        onClick={() => removeRecipeName(favorite?.recipeTitle)}
+                    >
+                        Undo
+                    </button>
                 </div>
             </>
         </Card>
@@ -96,7 +100,6 @@ const Card = styled.div`
     img {
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;
-        height: 270px;
     }
 
     .card__desc {

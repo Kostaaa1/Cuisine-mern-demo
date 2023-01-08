@@ -2,9 +2,13 @@ const User = require("../models/User");
 
 module.exports = {
     addUser: async (req, res) => {
+        console.log(req.body);
         try {
-            const user = await User.create(req.body.user);
-            res.json(user);
+            const newUser = new User(req.body.user);
+            await newUser.save();
+            // const user = await User.create(newUser);
+
+            res.json(newUser);
         } catch (error) {
             console.log(error);
         }
@@ -20,19 +24,20 @@ module.exports = {
     addToFavorite: async (req, res) => {
         console.log(req.body);
         try {
-            const user = await User.updateOne(
+            const user = await User.findOneAndUpdate(
                 {
                     email: req.params.email,
                     "collections.collName": "All saved items",
                 },
                 {
-                    $push: {
+                    $addToSet: {
                         "collections.$.collRecipes": {
-                            recipeName: req.body.recipeName,
-                            recipeData: req.body.recipeData,
+                            recipeTitle: req.body.recipeTitle,
+                            recipe: req.body.recipe,
                         },
                     },
-                }
+                },
+                { unique: true, new: true, runValidators: true }
             );
 
             res.json(user);
@@ -41,22 +46,19 @@ module.exports = {
         }
     },
     deleteFavorite: async (req, res) => {
+        console.log(req.body);
         try {
-            const user = await User.updateOne(
+            const user = await User.findOneAndUpdate(
                 {
                     email: req.params.email,
                     "collections.collName": "All saved items",
                 },
-                // {
-                //     $pull: {
-                //         "collections.$.collRecipes": {
-                //             { _id: { $in: ids } }
-                //         },
-                //     },
-                // }
                 {
                     $pull: {
-                        "collections.$.collRecipes": { _id: { $in: ids } },
+                        "collections.$.collRecipes": {
+                            // _id: { $in: req.body.ids },
+                            recipeTitle: { $in: req.body.titles },
+                        },
                     },
                 }
             );

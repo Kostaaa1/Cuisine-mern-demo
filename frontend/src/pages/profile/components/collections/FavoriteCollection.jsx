@@ -15,7 +15,7 @@ const FavoriteCollection = () => {
             {currentUser && (
                 <CustomLink to={"/account/profile/saved-items"}>
                     <div className="collection-layout">
-                        {arr.map((recipe, id) => (
+                        {arr?.map((recipe, id) => (
                             <img key={id} src={recipe.data.image} alt="" />
                         ))}
                     </div>

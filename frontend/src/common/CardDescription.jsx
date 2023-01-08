@@ -32,13 +32,13 @@ const CardDescription = ({ data }) => {
         setFavorite(true);
 
         fetch(`/api/auth/${user.email}`, {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                recipeName: recipeTitle,
-                recipeData: recipe,
+                recipeTitle: recipeTitle,
+                recipe: recipe,
             }),
         });
     };

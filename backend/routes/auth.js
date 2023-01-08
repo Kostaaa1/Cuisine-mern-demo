@@ -5,8 +5,8 @@ const jwtCheck = require("../jwtCheck");
 
 router.post("/", UserController.addUser);
 router.get("/:email", UserController.getUser);
-router.put("/:email", UserController.addToFavorite);
-router.put("/:email/delete", UserController.deleteFavorite);
+router.post("/:email", UserController.addToFavorite);
+router.put("/:email/deleteFavs", UserController.deleteFavorite);
 // router.post("/register", UserController.registerUser);
 // router.post("/login", UserController.loginUser);
 

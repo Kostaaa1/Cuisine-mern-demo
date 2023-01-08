@@ -12,7 +12,7 @@ export const useFavorites = () => {
     const { data, isLoading, isSuccess, refetch, isFetched, isFetching } =
         useQuery(["favorite"], async () => {
             return axios
-                .get(`/api/auth/${user.email}`)
+                .get(`/api/auth/${user?.email}`)
                 .then((res) => res.data.collections[0].collRecipes);
         });
 

@@ -3,35 +3,47 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import List from "../../pages/profile/components/List";
 import ButtonBorder from "../../common/ButtonBorder";
-import IndexesContext from "../../setup/app-context-menager/IndexesContext";
+import IndexesContext from "../../setup/app-context-menager/RecipeNameContext";
 import AuthContext from "../../setup/app-context-menager/AuthContext";
 import { motion } from "framer-motion";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import { useAuth } from "../../setup/auth/useAuth";
 
 const MyProfile = ({ listContent, staticList }) => {
-    const { arrayId, setArrayId } = useContext(IndexesContext);
+    const { arrayOfRecipeNames, setArrayOfRecipeNames } =
+        useContext(IndexesContext);
     const { isLoading, isAuthenticated, getAccessTokenSilently, user } =
         useAuth0();
     const { currentUser, loading, validated, authenticated } =
         useContext(AuthContext);
+    const { fetchUserData } = useAuth();
     const [data, setData] = useState([]);
 
+    // useEffect(() => {
+    //     console.log("fetched user data");
+    //     fetchUserData();
+    // }, []);
+
     useEffect(() => {
-        if (arrayId.length !== 0) {
+        console.log(currentUser);
+    }, [currentUser]);
+
+    useEffect(() => {
+        if (arrayOfRecipeNames.length !== 0) {
             handleDeletionOfIndexes();
-            setArrayId([]);
+            setArrayOfRecipeNames([]);
         }
     }, [location.pathname !== "/account/profile/saved-items"]);
 
     const handleDeletionOfIndexes = async () => {
-        await fetch(`/api/auth/${user?.email}`, {
+        await fetch(`/api/auth/${user?.email}/deleteFavs`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                ids: arrayId,
+                titles: arrayOfRecipeNames,
                 email: user?.email,
             }),
         });

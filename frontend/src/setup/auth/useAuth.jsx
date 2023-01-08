@@ -25,6 +25,7 @@ export const useAuth = () => {
     const userLogout = () => {
         localStorage.clear();
         logout();
+        setCurrentUser(null);
     };
     // const { data: jwtToken } = useQuery(["token"], async () => {
     //     return getAccessTokenSilently()
@@ -39,13 +40,13 @@ export const useAuth = () => {
     const newUser = async () => {
         try {
             if (!isLoading) {
-                const res = await fetch(`/api/auth/${user.email}`);
+                const res = await fetch(`/api/auth/${user?.email}`);
                 const data = await res.json();
 
                 if (!data) {
                     addNewUser();
                 }
-
+                console.log(data);
                 setCurrentUser(data);
             }
         } catch (error) {
@@ -54,33 +55,35 @@ export const useAuth = () => {
     };
 
     const addNewUser = async () => {
-        const newUser = {
-            nickname: user.nickname,
-            email: user.email,
-            name: user.name,
-            picture:
-                "https://st3.depositphotos.com/4326917/12573/v/450/depositphotos_125734036-stock-illustration-user-sign-illustration-white-icon.jpg",
-            collections: [
-                {
-                    collName: "All saved items",
-                    collDesc: "",
-                    private: false,
+        if (user) {
+            const newUser = {
+                nickname: user.nickname,
+                email: user.email,
+                name: user.name,
+                picture:
+                    "https://st3.depositphotos.com/4326917/12573/v/450/depositphotos_125734036-stock-illustration-user-sign-illustration-white-icon.jpg",
+                collections: [
+                    {
+                        collName: "All saved items",
+                        collDesc: "",
+                        private: false,
+                        collRecipes: [],
+                    },
+                ],
+            };
+
+            await fetch("/api/auth", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
                 },
-            ],
-        };
+                body: JSON.stringify({
+                    user: newUser,
+                }),
+            });
+        }
 
-        setCurrentUser(newUser);
-
-        await fetch("/api/auth", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user: newUser,
-            }),
-        });
+        newUser();
     };
-
-    return { currentUser, userLogout, authenticated };
+    return { currentUser, userLogout, authenticated, newUser };
 };

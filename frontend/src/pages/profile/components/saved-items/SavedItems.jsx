@@ -6,7 +6,7 @@ import TransparentCard from "./TransparentCard";
 import Button from "../../../../common/Button";
 import Return from "../../../../common/Return";
 import { useNavigate } from "react-router-dom";
-import IndexesContext from "../../../../setup/app-context-menager/IndexesContext";
+import IndexesContext from "../../../../setup/app-context-menager/RecipeNameContext";
 import { useFavorites } from "../../hooks/useFavorites";
 import Loading from "../../../../common/Loading";
 
@@ -22,16 +22,17 @@ const SavedItems = () => {
         isFetching,
     } = useFavorites();
 
-    const { arrayId, setArrayId } = useContext(IndexesContext);
+    const { arrayOfRecipeNames, setArrayOfRecipeNames } =
+        useContext(IndexesContext);
 
-    const addId = async (id) => {
-        const arr = [...arrayId, id];
-        setArrayId(arr);
+    const addRecipeName = async (id) => {
+        const arr = [...arrayOfRecipeNames, id];
+        setArrayOfRecipeNames(arr);
     };
 
-    const removeId = async (id) => {
-        const arr = arrayId.filter((recipeId) => recipeId !== id);
-        setArrayId(arr);
+    const removeRecipeName = async (id) => {
+        const arr = arrayOfRecipeNames.filter((name) => name !== id);
+        setArrayOfRecipeNames(arr);
     };
 
     refetchOnLoad();
@@ -76,17 +77,20 @@ const SavedItems = () => {
                     <div className="collection-control">
                         {isSuccess &&
                             data?.map((favorite, id) =>
-                                arrayId.includes(favorite._id) ? (
+                                arrayOfRecipeNames.includes(
+                                    favorite?.recipeTitle
+                                ) ? (
                                     <TransparentCard
                                         key={id}
                                         favorite={favorite}
-                                        removeId={removeId}
+                                        removeRecipeName={removeRecipeName}
                                     />
                                 ) : (
                                     <CollectionCard
                                         key={id}
+                                        id={id}
                                         favorite={favorite}
-                                        addId={addId}
+                                        addRecipeName={addRecipeName}
                                     />
                                 )
                             )}
